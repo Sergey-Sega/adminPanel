@@ -2,6 +2,7 @@
   "name": "admin_panel",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://sergey-sega.github.io/adminPanel/",
   "dependencies": {
     "axios": "^0.26.0",
     "dotenv": "^16.0.0",
