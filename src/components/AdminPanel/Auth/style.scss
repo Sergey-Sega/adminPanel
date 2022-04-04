@@ -1,0 +1,130 @@
+@import '../../../variables.scss';
+$logo: url('../../../assets/Logo.svg');
+.authorization {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 5%;
+  &__heading {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 17px;
+    .logo {
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+      margin-right: 24px;
+      mask-size: cover;
+      background: $mainAccent;
+      mask: $logo;
+    }
+    &__head {
+      font-family: $adminFont;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 28px;
+      margin: 0px;
+      color:$adminFontColor;
+    }
+  }
+  &__login-block {
+    padding: 2px 18px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0px 1px 0px rgba(90, 97, 105, 0.11),
+      0px 2px 4px rgba(90, 97, 105, 0.12), 0px 5px 5px rgba(90, 97, 105, 0.06),
+      0px 3.5px 35px rgba(90, 97, 105, 0.1);
+    border-radius: 9px;
+    &__name {
+      font-family: $adminFont;
+      font-weight: normal;
+      font-size: 17.5px;
+      line-height: 20px;
+      text-align: center;
+      padding: 0px 0px 25px 0px;
+      color:$adminFontColor;
+    }
+    &__form {
+      display: flex;
+      flex-direction: column;
+      &__fieldset {
+        legend {
+          font-family: $adminFont;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 10.5px;
+          line-height: 12px;
+          color: #495057;
+        }
+        padding: 8px 0px;
+      }
+      &__input {
+        font-family: $adminFont;
+        min-width: 320px;
+        height: 29px;
+        border-radius: 3px;
+        outline: none;
+        border: 0.5px solid #becad6;
+        font-size: 11px;
+        line-height: 13px;
+        color: $mainBlack;
+        padding: 0px 0px 0px 11px;
+      }
+      &__buttons-block {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 0px 3px 0px;
+      }
+    }
+  }
+}
+
+.link {
+  font-family: $adminFont;
+  font-size: 10.5px;
+  line-height: 12px;
+  color: $blue;
+  text-decoration: none;
+  &:hover {
+    color: lighten($blue, 10);
+  }
+}
+.admin-button {
+  font-family: $adminFont;
+  font-weight: 400;
+  font-size: 11.5px;
+  line-height: 13px;
+  box-sizing: content-box;
+  width: 110px;
+  height: 29px;
+  color: #fff;
+  outline: none;
+  border-radius: 4px;
+  &.blue {
+    background: $blue;
+    border: 0.5px solid $blue;
+    &:hover {
+      background: darken($blue, 10);
+      border: 0.5px solid darken($blue, 10);
+    }
+    &:focus {
+      background: darken($blue, 15);
+      border: 0.5px solid darken($blue, 15);
+    }
+  }
+}
+
+
+@media (max-width: 350px){
+  .authorization__login-block__form__input{
+    min-width: 240px;
+  }
+}
