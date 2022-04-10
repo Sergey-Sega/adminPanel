@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/adminPanel/static/css/main.e9643336.css",
-    "main.js": "/adminPanel/static/js/main.9bbef3ab.js",
+    "main.css": "/adminPanel/static/css/main.22c3dfcf.css",
+    "main.js": "/adminPanel/static/js/main.84608801.js",
     "static/media/helvetica_bold.otf": "/adminPanel/static/media/helvetica_bold.899889c95eb3c6b47ce3.otf",
     "static/media/helvetica_regular.otf": "/adminPanel/static/media/helvetica_regular.da7db66db5a8e54a8308.otf",
     "static/media/Roboto-Medium.ttf": "/adminPanel/static/media/Roboto-Medium.13a29228654d5c5ec9c4.ttf",
@@ -11,11 +11,11 @@
     "static/media/helvetica_light.otf": "/adminPanel/static/media/helvetica_light.677f82c0f6e45b4eeaf2.otf",
     "static/media/Logo.svg": "/adminPanel/static/media/Logo.256003241188272dee54.svg",
     "index.html": "/adminPanel/index.html",
-    "main.e9643336.css.map": "/adminPanel/static/css/main.e9643336.css.map",
-    "main.9bbef3ab.js.map": "/adminPanel/static/js/main.9bbef3ab.js.map"
+    "main.22c3dfcf.css.map": "/adminPanel/static/css/main.22c3dfcf.css.map",
+    "main.84608801.js.map": "/adminPanel/static/js/main.84608801.js.map"
   },
   "entrypoints": [
-    "static/css/main.e9643336.css",
-    "static/js/main.9bbef3ab.js"
+    "static/css/main.22c3dfcf.css",
+    "static/js/main.84608801.js"
   ]
 }
