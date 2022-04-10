@@ -1,5 +1,11 @@
-@import '../../../variables.scss';
-$logo: url('../../../assets/Logo.svg');
+@import '../../variables.scss';
+$logo: url('../../assets/Logo.svg');
+.admin-panel {
+  background-color: $backgroundAdmin;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
 .authorization {
   margin-top: auto;
   margin-bottom: auto;
