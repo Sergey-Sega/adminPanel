@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.db74581f.css",
-    "main.js": "/static/js/main.c3b5768b.js",
-    "static/media/helvetica_bold.otf": "/static/media/helvetica_bold.899889c95eb3c6b47ce3.otf",
-    "static/media/helvetica_regular.otf": "/static/media/helvetica_regular.da7db66db5a8e54a8308.otf",
-    "static/media/Roboto-Medium.ttf": "/static/media/Roboto-Medium.13a29228654d5c5ec9c4.ttf",
-    "static/media/Roboto-Regular.ttf": "/static/media/Roboto-Regular.03523cf578d69fa92322.ttf",
-    "static/media/Roboto-Bold.ttf": "/static/media/Roboto-Bold.4f39c5796e60c9d8e732.ttf",
-    "static/media/Roboto-Light.ttf": "/static/media/Roboto-Light.0cea39826bd36bbfe330.ttf",
-    "static/media/helvetica_light.otf": "/static/media/helvetica_light.677f82c0f6e45b4eeaf2.otf",
-    "static/media/Logo.svg": "/static/media/Logo.256003241188272dee54.svg",
-    "index.html": "/index.html",
-    "main.db74581f.css.map": "/static/css/main.db74581f.css.map",
-    "main.c3b5768b.js.map": "/static/js/main.c3b5768b.js.map"
+    "main.css": "/adminPanel/static/css/main.22c3dfcf.css",
+    "main.js": "/adminPanel/static/js/main.372c23d9.js",
+    "static/media/helvetica_bold.otf": "/adminPanel/static/media/helvetica_bold.899889c95eb3c6b47ce3.otf",
+    "static/media/helvetica_regular.otf": "/adminPanel/static/media/helvetica_regular.da7db66db5a8e54a8308.otf",
+    "static/media/Roboto-Medium.ttf": "/adminPanel/static/media/Roboto-Medium.13a29228654d5c5ec9c4.ttf",
+    "static/media/Roboto-Regular.ttf": "/adminPanel/static/media/Roboto-Regular.03523cf578d69fa92322.ttf",
+    "static/media/Roboto-Bold.ttf": "/adminPanel/static/media/Roboto-Bold.4f39c5796e60c9d8e732.ttf",
+    "static/media/Roboto-Light.ttf": "/adminPanel/static/media/Roboto-Light.0cea39826bd36bbfe330.ttf",
+    "static/media/helvetica_light.otf": "/adminPanel/static/media/helvetica_light.677f82c0f6e45b4eeaf2.otf",
+    "static/media/Logo.svg": "/adminPanel/static/media/Logo.256003241188272dee54.svg",
+    "index.html": "/adminPanel/index.html",
+    "main.22c3dfcf.css.map": "/adminPanel/static/css/main.22c3dfcf.css.map",
+    "main.372c23d9.js.map": "/adminPanel/static/js/main.372c23d9.js.map"
   },
   "entrypoints": [
-    "static/css/main.db74581f.css",
-    "static/js/main.c3b5768b.js"
+    "static/css/main.22c3dfcf.css",
+    "static/js/main.372c23d9.js"
   ]
 }
