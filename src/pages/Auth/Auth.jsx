@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../store/actions/authActions';
 import './style.scss';
 
@@ -10,6 +11,15 @@ export const Auth = () => {
     username: '',
     password: '',
   });
+
+  const error = useSelector(({auth}) => auth.errors);
+
+const handleChange = useCallback(
+  (prop) => (event) => {
+    setAuthValues((values) => ({ ...values, [prop]: event?.target.value }));
+  },
+  [setAuthValues],
+);
 
   const dispatch = useDispatch();
 
@@ -33,12 +43,7 @@ export const Auth = () => {
               <input
                 className="authorization__login-block__form__input"
                 type="text"
-                onChange={(e) =>
-                  setAuthValues((prev) => ({
-                    ...prev,
-                    username: e.target.value,
-                  }))
-                }
+                onChange={handleChange('username')}
               />
             </fieldset>
             <fieldset className="authorization__login-block__form__fieldset">
@@ -46,13 +51,9 @@ export const Auth = () => {
               <input
                 className="authorization__login-block__form__input"
                 type="password"
-                onChange={(e) =>
-                  setAuthValues((prev) => ({
-                    ...prev,
-                    password: e.target.value,
-                  }))
-                }
+                onChange={handleChange('password')}
               />
+              <div className='error'>{error}</div>
             </fieldset>
             <span className="authorization__login-block__form__buttons-block">
               <a className="link" href="#">
@@ -61,7 +62,6 @@ export const Auth = () => {
               <button
                 className="admin-button blue"
                 type="submit"
-                disabled={(!authValues.username.length) || (!authValues.password.length)}
               >
                 Войти
               </button>

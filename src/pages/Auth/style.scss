@@ -69,6 +69,10 @@ $logo: url('../../assets/Logo.svg');
           color: #495057;
         }
         padding: 8px 0px;
+        .error{
+          color: red;
+          font-family: $adminFont;
+        }
       }
       &__input {
         font-family: $adminFont;
