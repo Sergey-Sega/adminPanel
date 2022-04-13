@@ -10,7 +10,7 @@ export const Routes = () => {
         <BrowserRouter>
         <AuthGate>
           <Switch>
-            <Route exact path="/adminPanel/admin" component={AdminTable} />
+            <Route exact path="/" component={AdminTable} />
             <Route exact path="/adminPanel" component={Auth} />
           </Switch>
         </AuthGate>
