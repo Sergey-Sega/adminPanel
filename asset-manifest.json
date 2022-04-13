@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/adminPanel/static/css/main.22c3dfcf.css",
-    "main.js": "/adminPanel/static/js/main.372c23d9.js",
+    "main.css": "/adminPanel/static/css/main.2cc6773f.css",
+    "main.js": "/adminPanel/static/js/main.582d64c3.js",
     "static/media/helvetica_bold.otf": "/adminPanel/static/media/helvetica_bold.899889c95eb3c6b47ce3.otf",
     "static/media/helvetica_regular.otf": "/adminPanel/static/media/helvetica_regular.da7db66db5a8e54a8308.otf",
     "static/media/Roboto-Medium.ttf": "/adminPanel/static/media/Roboto-Medium.13a29228654d5c5ec9c4.ttf",
@@ -11,11 +11,11 @@
     "static/media/helvetica_light.otf": "/adminPanel/static/media/helvetica_light.677f82c0f6e45b4eeaf2.otf",
     "static/media/Logo.svg": "/adminPanel/static/media/Logo.256003241188272dee54.svg",
     "index.html": "/adminPanel/index.html",
-    "main.22c3dfcf.css.map": "/adminPanel/static/css/main.22c3dfcf.css.map",
-    "main.372c23d9.js.map": "/adminPanel/static/js/main.372c23d9.js.map"
+    "main.2cc6773f.css.map": "/adminPanel/static/css/main.2cc6773f.css.map",
+    "main.582d64c3.js.map": "/adminPanel/static/js/main.582d64c3.js.map"
   },
   "entrypoints": [
-    "static/css/main.22c3dfcf.css",
-    "static/js/main.372c23d9.js"
+    "static/css/main.2cc6773f.css",
+    "static/js/main.582d64c3.js"
   ]
 }
