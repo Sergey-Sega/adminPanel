@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/adminPanel/static/css/main.2cc6773f.css",
-    "main.js": "/adminPanel/static/js/main.de845ed3.js",
+    "main.js": "/adminPanel/static/js/main.e89f746f.js",
     "static/media/helvetica_bold.otf": "/adminPanel/static/media/helvetica_bold.899889c95eb3c6b47ce3.otf",
     "static/media/helvetica_regular.otf": "/adminPanel/static/media/helvetica_regular.da7db66db5a8e54a8308.otf",
     "static/media/Roboto-Medium.ttf": "/adminPanel/static/media/Roboto-Medium.13a29228654d5c5ec9c4.ttf",
@@ -12,10 +12,10 @@
     "static/media/Logo.svg": "/adminPanel/static/media/Logo.256003241188272dee54.svg",
     "index.html": "/adminPanel/index.html",
     "main.2cc6773f.css.map": "/adminPanel/static/css/main.2cc6773f.css.map",
-    "main.de845ed3.js.map": "/adminPanel/static/js/main.de845ed3.js.map"
+    "main.e89f746f.js.map": "/adminPanel/static/js/main.e89f746f.js.map"
   },
   "entrypoints": [
     "static/css/main.2cc6773f.css",
-    "static/js/main.de845ed3.js"
+    "static/js/main.e89f746f.js"
   ]
 }
