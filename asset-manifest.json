@@ -1,21 +1,32 @@
 {
   "files": {
-    "main.css": "/adminPanel/static/css/main.2cc6773f.css",
-    "main.js": "/adminPanel/static/js/main.e89f746f.js",
-    "static/media/helvetica_bold.otf": "/adminPanel/static/media/helvetica_bold.899889c95eb3c6b47ce3.otf",
-    "static/media/helvetica_regular.otf": "/adminPanel/static/media/helvetica_regular.da7db66db5a8e54a8308.otf",
+    "main.css": "/adminPanel/static/css/main.653202da.css",
+    "main.js": "/adminPanel/static/js/main.047ad5ed.js",
     "static/media/Roboto-Medium.ttf": "/adminPanel/static/media/Roboto-Medium.13a29228654d5c5ec9c4.ttf",
     "static/media/Roboto-Regular.ttf": "/adminPanel/static/media/Roboto-Regular.03523cf578d69fa92322.ttf",
     "static/media/Roboto-Bold.ttf": "/adminPanel/static/media/Roboto-Bold.4f39c5796e60c9d8e732.ttf",
     "static/media/Roboto-Light.ttf": "/adminPanel/static/media/Roboto-Light.0cea39826bd36bbfe330.ttf",
-    "static/media/helvetica_light.otf": "/adminPanel/static/media/helvetica_light.677f82c0f6e45b4eeaf2.otf",
+    "static/media/HelveticaLight.ttf": "/adminPanel/static/media/HelveticaLight.9c4794b091302442b6a0.ttf",
+    "static/media/HelveticaRegular.ttf": "/adminPanel/static/media/HelveticaRegular.31a272d75aa97b0dcb55.ttf",
+    "static/media/car.png": "/adminPanel/static/media/car.7e813c651c28b9f195ab.png",
+    "static/media/HelveticaBold.ttf": "/adminPanel/static/media/HelveticaBold.d2d4622394c0e88a8c69.ttf",
     "static/media/Logo.svg": "/adminPanel/static/media/Logo.256003241188272dee54.svg",
+    "static/media/Shape.svg": "/adminPanel/static/media/Shape.c8b5b3af1de2fdaa3efe.svg",
+    "static/media/LogoIcon.svg": "/adminPanel/static/media/LogoIcon.554e71f6994fcb6415c5.svg",
+    "static/media/Notifications.svg": "/adminPanel/static/media/Notifications.4a73f89d5ed8c6ab9e4f.svg",
     "index.html": "/adminPanel/index.html",
-    "main.2cc6773f.css.map": "/adminPanel/static/css/main.2cc6773f.css.map",
-    "main.e89f746f.js.map": "/adminPanel/static/js/main.e89f746f.js.map"
+    "static/media/Forms.svg": "/adminPanel/static/media/Forms.66a68a11e4930f136ae0.svg",
+    "static/media/Person.svg": "/adminPanel/static/media/Person.83a584d6d70a33691156.svg",
+    "static/media/Edit.svg": "/adminPanel/static/media/Edit.58924bd77e7b73bee401.svg",
+    "static/media/Overview.svg": "/adminPanel/static/media/Overview.f1fc228fe855f0696c61.svg",
+    "static/media/Error.svg": "/adminPanel/static/media/Error.9ae656e3678d67bca3ec.svg",
+    "static/media/CarList.svg": "/adminPanel/static/media/CarList.738fc3f8ee3853ab7434.svg",
+    "static/media/Orders.svg": "/adminPanel/static/media/Orders.f2c1be7b09e938c0cdee.svg",
+    "main.653202da.css.map": "/adminPanel/static/css/main.653202da.css.map",
+    "main.047ad5ed.js.map": "/adminPanel/static/js/main.047ad5ed.js.map"
   },
   "entrypoints": [
-    "static/css/main.2cc6773f.css",
-    "static/js/main.e89f746f.js"
+    "static/css/main.653202da.css",
+    "static/js/main.047ad5ed.js"
   ]
 }
