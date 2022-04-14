@@ -1,0 +1,30 @@
+@import '../../../variables.scss';
+.admin-panel__container__bottombar {
+  &__link-block {
+    .link {
+      margin-right: 16px;
+    }
+  }
+  &__copyright {
+    font-family: $adminFont;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: $grayDark;
+  }
+}
+@media (max-width: $smart) {
+  .admin-panel__container__bottombar {
+    border-top: $adminBorder;
+    &__copyright {
+      font-size: 0.5em;
+    }
+    &__link-block {
+      display: flex;
+      flex-direction: column;
+      a {
+        padding: 4px;
+      }
+    }
+  }
+}

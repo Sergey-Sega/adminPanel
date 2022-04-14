@@ -1,0 +1,231 @@
+@import '../../../variables.scss';
+
+.order-block {
+   @include adminBlock;
+  box-sizing: border-box;
+  height: 386px;
+  display: flex;
+  flex-direction: column;
+  &__sort-container {
+    height: 59px;
+    border-bottom: $adminBorder;
+    display: grid;
+    &__sort {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 0px 21px;
+      .admin__button.blue{
+        margin-left: auto;
+      }
+      select {
+        margin: 0px 7.5px;
+        option {
+          height: 16px !important;
+        }
+      }
+    }
+  }
+  &__info {
+    font-family: $adminFont;
+    color: $adminFontColor;
+    flex: 1 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 28px;
+    &__part {
+      display: flex;
+      flex: 1 1;
+      flex-direction: row;
+      align-items: center;
+      &:last-child {
+        justify-content: space-between;
+      }
+    }
+    &__img {
+      width: 200px;
+    }
+    &__text {
+      color: $grayDark;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+      span {
+        color: $mainBlack;
+      }
+    }
+    &__cost {
+      font-family: $adminFont;
+      font-weight: normal;
+      font-size: 28px;
+      line-height: 30px;
+      color: $mainBlack;
+    }
+    &__buttons {
+      border-radius: 4px;
+      font-family: $adminFont;
+      color: $adminFontColor;
+      button {
+        padding: 7px;
+        width: 80px;
+        outline: none;
+        color: $adminFontColor;
+        background: #fff;
+        font-family: $adminFont;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 13px;
+        &:hover {
+          background: darken(#fff, 5);
+        }
+        &:focus,
+        &:active {
+          background: darken(#fff, 10);
+        }
+      }
+      &__ok {
+        border: none;
+        border-top: $adminBorder;
+        border-bottom: $adminBorder;
+        border-left: $adminBorder;
+        border-radius: 4px 0px 0px 4px;
+        span {
+          color: $mainAccent;
+          font-weight: bold;
+        }
+      }
+      &__cancel {
+        border: $adminBorder !important;
+        span {
+          color: $red;
+          font-weight: bold;
+        }
+      }
+      &__edit {
+        border: none;
+        border-top: $adminBorder;
+        border-bottom: $adminBorder;
+        border-right: $adminBorder;
+        border-radius: 0px 4px 4px 0px;
+        span {
+          color: $grayDark;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  &__pagination {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-top: $adminBorder;
+    height: 59px;
+    min-height: 59px;
+    &__link{
+    font-family: $adminFont;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    background: #007BFF;    
+    color: #FFFFFF;
+    }
+  }
+}
+.admin__button .blue{
+margin-left: auto;
+}
+@media (min-width: $desktopMini) {
+  .order-block {
+    &__info {
+      &__part {
+        justify-content: space-around !important;
+      }
+    }
+  }
+}
+
+@media (max-width: $desktopMini) {
+  .order-block {
+    &__info {
+      flex-direction: column;
+      align-items: center;
+      &__part {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+@media (max-width: $desktopMini) {
+  .order-block {
+    &__info {
+      flex-direction: column;
+      align-items: center;
+      &__part {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+@media (max-width: $smart) {
+  .order-block {
+    flex: 1 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 0px;
+    box-shadow: none;
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+      background: #ffffff;
+    }
+
+    &::-webkit-scrollbar-button {
+      height: 0px;
+    }
+    &::-webkit-scrollbar-track-piece {
+      background: transparentize($blue, 0.7);
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background: $blue;
+    }
+
+    &__info {
+      padding: 13px;
+      &__part {
+        flex-direction: column;
+      }
+      &__buttons {
+        button {
+          width: 66px;
+          font-size: 9px;
+        }
+      }
+    }
+    &__sort-container {
+      border-top: $adminBorder;
+      height: auto;
+      flex-direction: row;
+      align-items: baseline;
+      padding: 8px 0px;
+      margin: 0px 0px auto 0px;
+      &__sort {
+        flex-direction: column;
+        .admin__select {
+          margin-bottom: 7px;
+          width: 160px;
+        }
+        .admin__button {
+          width: 160px;
+          box-sizing: border-box;
+        }
+      }
+    }
+  }
+}
