@@ -16,7 +16,6 @@ $notifications: url('../../../assets/Notifications.svg');
       height: 13px;
       mask-size: cover;
       background: $adminFontColor;
-      // -webkit-mask-position: 0 0;
       -webkit-mask-size: 16px 16px;
       mask: $shape;
     }
@@ -48,7 +47,6 @@ $notifications: url('../../../assets/Notifications.svg');
       height: 26px;
       mask-size: cover;
       background: $adminFontColor;
-      // -webkit-mask-position: 0 0;
       -webkit-mask-size: 26px 26px;
     }
     &__counter {
