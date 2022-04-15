@@ -1,8 +1,171 @@
 @import './../../variables.scss';
-
+$logo: url('../../assets/Logo.svg');
+.logo {
+  display: inline-block;
+  mask-size: cover;
+  background: $mainAccent;
+  mask: $logo;
+}
 .admin-panel {
   background-color: $backgroundAdmin;
   height: 100%;
   display: flex;
   justify-content: center;
+  &__container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 68.5px 1fr 68.5px;
+    &__sidebar {
+      z-index: 3;
+      grid-area: 1 / 1 / 4 / 2;
+      background: #fff;
+      box-shadow: 3px 0px 13px 0px transparentize($mainBlack, 0.6);
+    }
+
+    &__topbar {
+      z-index: 2;
+      grid-area: 1 / 2 / 2 / 3;
+      background: #fff;
+      box-shadow: 0px 3px 13px 0px transparentize($mainBlack, 0.6);
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    &__content {
+      &::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+        background: #ffffff;
+      }
+
+      &::-webkit-scrollbar-button {
+        height: 0px;
+      }
+      &::-webkit-scrollbar-track-piece {
+        background: transparentize($blue, 0.7);
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 2px;
+        background: $blue;
+      }
+      overflow: auto;
+      z-index: 1;
+      grid-area: 2 / 2 / 3 / 3;
+      background-color: $backgroundAdmin;
+      padding: 0px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+    &__bottombar {
+      z-index: 1;
+      grid-area: 3 / 2 / 4 / 3;
+      background: blanchedalmond;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      padding: 27px;
+    }
+  }
+}
+
+.admin {
+  &__button {
+    font-family: $adminFont;
+    font-weight: normal;
+    font-size: 11.5px;
+    line-height: 13px;
+    box-sizing: content-box;
+    width: 110px;
+    height: 29px;
+    color: #fff;
+    outline: none;
+    border-radius: 4px;
+    &.blue {
+      background: $blue;
+      border: 0.5px solid $blue;
+      &:hover {
+        background: darken($blue, 10);
+        border: 0.5px solid darken($blue, 10);
+      }
+      &:focus {
+        background: darken($blue, 15);
+        border: 0.5px solid darken($blue, 15);
+      }
+    }
+    &:disabled {
+      background: $grayButton;
+      border: 0.5px solid darken($grayButton, 15);
+    }
+  }
+  &__link {
+    font-family: $adminFont;
+    font-size: 10.5px;
+    line-height: 12px;
+    margin-right: 16px;
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      color: darken($blue, 10);
+    }
+    &:active {
+      color: darken($blue, 20);
+    }
+  }
+  &__select {
+    background: #fff;
+    font-family: $adminFont;
+    padding: 8px;
+    outline: none;
+    width: 110px;
+    border: $adminBorder;
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 13px;
+    &:hover,
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+  &__heading {
+    box-sizing: border-box;
+    font-family: $adminFont;
+    color: $adminFontColor;
+    font-weight: normal;
+    font-size: 29px;
+    line-height: 33px;
+  }
+}
+
+@media (max-width: $tablet) {
+  .admin-panel {
+    &__container {
+      grid-template-columns: 57.5px 1fr;
+      grid-template-rows: 68.5px 1fr 68.5px;
+      &__content {
+        padding: 14px;
+      }
+    }
+  }
+}
+@media (max-width: $smart) {
+  .admin {
+    &__heading {
+      margin: 5px 15px;
+      font-size: 20px;
+    }
+  }
+  .admin-panel {
+    &__container {
+      &__content {
+        background: #fff;
+        padding: 0px;
+      }
+    }
+  }
 }
