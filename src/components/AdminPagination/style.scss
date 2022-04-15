@@ -1,0 +1,48 @@
+@import '../../variables.scss';
+.admin__pagination {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  &__button {
+    height: 23px;
+    width: 23px;
+    margin: 7px;
+    box-sizing: border-box;
+    background: #fff;
+    border: solid 1px transparent;
+    border-radius: 50%;
+    outline: none;
+    color: $blue;
+    font-weight: normal;
+    font-size: 15px;
+    font-family: $adminFont;
+    transition: 0.5s linear;
+    &.arrow{
+      font-size: 18px;
+      line-height: 17px;
+    }
+    &:hover{
+        background: lighten($blue, 20);
+    }
+    &:disabled{
+        background: $blue;
+        color: #fff;
+    }
+    &.arrow{
+      &:disabled{
+        background: #fff;
+        color:lighten($blue, 20);
+    }
+    }
+  }
+  &__dots {
+    margin: 0px;
+    color: $blue;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 17px;
+    font-family: $adminFont;
+  }
+}

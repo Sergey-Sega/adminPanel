@@ -22,17 +22,20 @@
 }
 @font-face {
   font-family: 'Helvetica';
-  src: url('./assets/fonts/helvetica_bold.otf');
-  font-weight: bold;
+  src: url('./assets/fonts/HelveticaBold.ttf');
+  font-style: normal;
+  font-weight: 700;
 }
 @font-face {
   font-family: 'Helvetica';
-  src: url('./assets/fonts/helvetica_regular.otf');
-  font-weight: normal;
+  src: url('./assets/fonts/HelveticaRegular.ttf');
+  font-style: normal;
+    font-weight: 400;
 }
 @font-face {
   font-family: 'Helvetica';
-  src: url('./assets/fonts/helvetica_light.otf');
+  src: url('./assets/fonts/HelveticaLight.ttf');
+  font-style: normal;
   font-weight: 300;
 }
 

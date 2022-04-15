@@ -1,0 +1,111 @@
+@import '../../../variables.scss';
+$shape: url('../../../assets/Shape.svg');
+$notifications: url('../../../assets/Notifications.svg');
+
+.admin-panel__container__topbar {
+  color: $adminFontColor;
+  font-family: $adminFont;
+  .searching-form {
+    padding-left: 24px;
+    .shape {
+      position: absolute;
+      top: 28px;
+      left: 72px;
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      mask-size: cover;
+      background: $adminFontColor;
+      -webkit-mask-size: 16px 16px;
+      mask: $shape;
+    }
+    flex: 1 1;
+    &__input {
+      box-sizing: border-box;
+      width: 90%;
+      font-family: $adminFont;
+      color: $adminFontColor;
+      padding: 10px;
+      font-size: 14px;
+      line-height: 15px;
+      height: 100%;
+      outline: none;
+      border: none;
+    }
+  }
+  .notifications-block {
+    width: 68.5px;
+    border-left: $adminBorder;
+    border-right: $adminBorder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__icon {
+      mask: $notifications;
+      display: inline-block;
+      width: 26px;
+      height: 26px;
+      mask-size: cover;
+      background: $adminFontColor;
+      -webkit-mask-size: 26px 26px;
+    }
+    &__counter {
+      font-family: $adminFont;
+      font-weight: bold;
+      font-size: 9px;
+      line-height: 13px;
+      height: 14px;
+      position: absolute;
+      background: $red;
+      border-radius: 50%;
+      width: 14px;
+      color: #fff;
+      text-align: center;
+      margin: 10px 0px 0px 20px;
+    }
+  }
+  .user-block {
+    width: 218px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    &__user-pic {
+      padding: 0px 13px;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+    }
+    &__user-name {
+      font-family: $adminFont;
+      font-weight: normal;
+      font-size: 15px;
+      line-height: 17px;
+      margin-right: auto;
+    }
+    &__dropdown {
+      margin-right: 36.5px;
+    }
+  }
+}
+
+@media (max-width: $smart) {
+  .admin-panel__container__topbar {
+    .user-block {
+      width: 57px !important;
+      &__user-name {
+        display: none;
+      }
+      &__dropdown {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (min-width: $tablet) {
+    .searching-form .shape {
+          position: absolute !important;
+          left: 315px !important;
+        }
+  
+}

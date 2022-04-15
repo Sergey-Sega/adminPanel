@@ -1,0 +1,115 @@
+@import "../../../variables.scss";
+$carList: url("../../../assets/CarList.svg");
+$orders: url("../../../assets/Orders.svg");
+$overview: url("../../../assets/Overview.svg");
+$forms: url("../../../assets/Forms.svg");
+$person: url("../../../assets/Person.svg");
+$error: url("../../../assets/Error.svg");
+$edit: url("../../../assets/Edit.svg");
+$logo: url("../../../assets/LogoIcon.svg");
+
+.sidebar {
+  &__head {
+    box-sizing: border-box;
+    height: 67.5px;
+    background: #fff;
+    border-bottom: $adminBorder;
+    width: 100%;
+    color: $adminFontColor;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .logo {
+      display: inline-block;
+      width: 21.5px;
+      height: 21.5px;
+      margin-right: 7px;
+      margin-left: 49px;
+      background: $mainAccent;
+      mask: $logo;
+    }
+  }
+  &__link {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: $adminFont;
+    color: $adminFontColor;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 17px;
+    text-decoration: none;
+    height: 57.5px;
+    background: #fff;
+    border-bottom: $adminBorder;
+    width: 100%;
+    &:hover,
+    &:active,
+    &:focus {
+      box-shadow: inset 4px 0px $blue;
+      color: $blue;
+      span {
+        background: $blue;
+      }
+    }
+    &__icon {
+      margin: 22px;
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      mask-size: cover;
+      background: $adminFontColor;
+      mask-position: 0 0;
+      -webkit-mask-size: 16px 16px;
+      &.carList {
+        mask: $carList;
+      }
+      &.orders {
+        mask: $orders;
+      }
+      &.overview {
+        mask: $overview;
+      }
+      &.forms {
+        mask: $forms;
+      }
+      &.person {
+        mask: $person;
+      }
+      &.error {
+        mask: $error;
+      }
+      &.edit {
+        mask: $edit;
+      }
+    }
+  }
+}
+@media (max-width: $tablet) {
+  .admin-panel__container__sidebar {
+    width: 57px;
+    overflow: hidden;
+    transition: width 0.6s cubic-bezier(0.39, 0.58, 0.57, 1);
+    &:hover {
+      width: 300px;
+    }
+  }
+  .sidebar {
+    &__link {
+      width: 300px;
+    }
+    &__head .logo {
+      margin-left: 15px;
+    }
+    &__head .par {
+      display: none;
+    }
+  }
+}
+@media (max-width: $smart) {
+  .admin-panel__container__sidebar:hover {
+    width: 250px;
+  }
+}
