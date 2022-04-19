@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import CarEditCard from './CarEditCard/CarEditCard';
 import CityPointCard from './CityPointCard/CityPointCard';
+import { ErrorPage } from './ErrorPage/ErrorPage';
 import { Footer } from './Footer/Footer';
 import { Header } from './Header/Header';
 import { Orders } from './Orders/Orders';
@@ -31,6 +32,8 @@ export const AdminTable = () => {
                   <Route
                   exact path="/adminPanel/car-edit-card"
                   component={CarEditCard}/>
+                  <Route exact path='/adminPanel/errorpage'
+                  component={ErrorPage}/>
                 </Switch>
                 </div>
               <div className='admin-panel__container__bottombar'>
