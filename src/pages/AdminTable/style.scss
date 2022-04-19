@@ -1,171 +1,305 @@
 @import './../../variables.scss';
 $logo: url('../../assets/Logo.svg');
 .logo {
-  display: inline-block;
-  mask-size: cover;
-  background: $mainAccent;
-  mask: $logo;
-}
-.admin-panel {
-  background-color: $backgroundAdmin;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  &__container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    grid-template-rows: 68.5px 1fr 68.5px;
-    &__sidebar {
-      z-index: 3;
-      grid-area: 1 / 1 / 4 / 2;
-      background: #fff;
-      box-shadow: 3px 0px 13px 0px transparentize($mainBlack, 0.6);
+    display: inline-block;
+    mask-size: cover;
+    background: $mainAccent;
+    mask: $logo;
+  }
+  .admin-panel {
+    background-color: $backgroundAdmin;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    &__container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      grid-template-rows: 68.5px 1fr 68.5px;
+      &__sidebar {
+        z-index: 3;
+        grid-area: 1 / 1 / 4 / 2;
+        background: #fff;
+        box-shadow: 3px 0px 13px 0px transparentize($mainBlack, 0.6);
+      }
+  
+      &__topbar {
+        z-index: 2;
+        grid-area: 1 / 2 / 2 / 3;
+        background: #fff;
+        box-shadow: 0px 3px 13px 0px transparentize($mainBlack, 0.6);
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+  
+      &__content {
+        &::-webkit-scrollbar {
+          width: 4px;
+          height: 4px;
+          background: #ffffff;
+        }
+  
+        &::-webkit-scrollbar-button {
+          height: 0px;
+        }
+        &::-webkit-scrollbar-track-piece {
+          background: transparentize($blue, 0.7);
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 2px;
+          background: $blue;
+        }
+        position: relative;
+        overflow: auto;
+        z-index: 1;
+        grid-area: 2 / 2 / 3 / 3;
+        background-color: $backgroundAdmin;
+        padding: 0px 28px;
+        display: flex;
+        flex-direction: column;
+      }
+      &__bottombar {
+        z-index: 1;
+        grid-area: 3 / 2 / 4 / 3;
+        background: blanchedalmond;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fff;
+        padding: 27px;
+      }
     }
-
-    &__topbar {
-      z-index: 2;
-      grid-area: 1 / 2 / 2 / 3;
+  }
+  
+  .admin {
+    &__button {
+      font-family: $adminFont;
+      font-weight: normal;
+      font-size: 11.5px;
+      line-height: 13px;
+      box-sizing: content-box;
+      width: 110px;
+      height: 29px;
+      outline: none;
+      border-radius: 4px;
+      &.blue {
+        color: #fff;
+        background: $blue;
+        border: 0.5px solid $blue;
+        &:hover {
+          background: darken($blue, 10);
+          border: 0.5px solid darken($blue, 10);
+        }
+        &:focus {
+          background: darken($blue, 15);
+          border: 0.5px solid darken($blue, 15);
+        }
+      }
+      &.red {
+        color: #fff;
+        background: $red;
+        border: 0.5px solid $red;
+        &:hover {
+          background: darken($red, 10);
+          border: 0.5px solid darken($red, 10);
+        }
+        &:focus {
+          background: darken($red, 15);
+          border: 0.5px solid darken($red, 15);
+        }
+      }
+      &.gray {
+        color: $mainBlack;
+        background: $grayButton;
+        border: 0.5px solid $grayButton;
+        &:hover {
+          background: darken($grayButton, 10);
+          border: 0.5px solid darken($grayButton, 10);
+        }
+        &:focus {
+          background: darken($grayButton, 15);
+          border: 0.5px solid darken($grayButton, 15);
+        }
+      }
+      &:disabled {
+        background: $grayButton;
+        border: 0.5px solid darken($grayButton, 15);
+      }
+    }
+    &__radio {
+      input {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        &:not(:disabled):active + span::before {
+          box-shadow: inset 0 0 4px 0.25rem $blue;
+        }
+        &:focus + span::before {
+          box-shadow: inset 0 0 3px 0.25rem $blue;
+        }
+        &:checked + span::before {
+          box-shadow: inset 0 0 0 0.25rem $blue;
+          border: none;
+        }
+        &:checked + span {
+          color: $adminFontColor;
+        }
+      }
+      span {
+        color: $grayDark;
+        margin: 0px 8px;
+        display: inline-flex;
+        align-items: center;
+        user-select: none;
+        &::before {
+          box-sizing: border-box;
+          content: '';
+          display: inline-block;
+          width: 13px;
+          height: 13px;
+          flex-shrink: 0;
+          flex-grow: 0;
+          border: 1px solid $grayButton;
+          border-radius: 50%;
+          margin-right: 0.5em;
+          margin-bottom: 1px;
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: 50% 50%;
+        }
+      }
+    }
+    &__link {
+      font-family: $adminFont;
+      font-size: 10.5px;
+      line-height: 12px;
+      margin-right: 16px;
+      color: $blue;
+      text-decoration: none;
+      &:hover {
+        color: darken($blue, 10);
+      }
+      &:active {
+        color: darken($blue, 20);
+      }
+    }
+    &__select {
       background: #fff;
-      box-shadow: 0px 3px 13px 0px transparentize($mainBlack, 0.6);
+      font-family: $adminFont;
+      padding: 8px;
+      outline: none;
+      width: 110px;
+      border: $adminBorder;
+      box-sizing: border-box;
+      border-radius: 4px;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 13px;
+      &:hover,
+      &:active,
+      &:focus {
+        outline: none;
+      }
+    }
+    &__heading {
+      box-sizing: border-box;
+      font-family: $adminFont;
+      color: $adminFontColor;
+      font-weight: normal;
+      font-size: 29px;
+      line-height: 33px;
+    }
+    &__input {
+      font-family: $adminFont;
+      min-width: 320px;
+      height: 29px;
+      border-radius: 3px;
+      outline: none;
+      border: $adminBorder;
+      font-size: 14px;
+      line-height: 13px;
+      color: $mainBlack;
+      padding-left: 11px;
+    }
+    &__textarea {
+      font-weight: normal;
+      font-size: 12.5px;
+      line-height: 148%;
+      resize: none;
+      width: 100%;
+      border: $adminBorder;
+      border-radius: 4px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    &__file-loader {
+      width: fit-content;
+      box-sizing: border-box;
       display: flex;
       flex-direction: row;
-      justify-content: flex-start;
-    }
-
-    &__content {
-      &::-webkit-scrollbar {
-        width: 4px;
-        height: 4px;
-        background: #ffffff;
+      border: $adminBorder;
+      border-radius: 4px;
+      input {
+        display: none;
       }
-
-      &::-webkit-scrollbar-button {
-        height: 0px;
+      &__text,
+      &__button {
+        padding: 9px 13px;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
       }
-      &::-webkit-scrollbar-track-piece {
-        background: transparentize($blue, 0.7);
+      &__text {
+        width: 166px;
+        display: block;
+        border-right: $adminBorder;
       }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 2px;
-        background: $blue;
-      }
-      overflow: auto;
-      z-index: 1;
-      grid-area: 2 / 2 / 3 / 3;
-      background-color: $backgroundAdmin;
-      padding: 0px 28px;
-      display: flex;
-      flex-direction: column;
-    }
-    &__bottombar {
-      z-index: 1;
-      grid-area: 3 / 2 / 4 / 3;
-      background: blanchedalmond;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #fff;
-      padding: 27px;
-    }
-  }
-}
-
-.admin {
-  &__button {
-    font-family: $adminFont;
-    font-weight: normal;
-    font-size: 11.5px;
-    line-height: 13px;
-    box-sizing: content-box;
-    width: 110px;
-    height: 29px;
-    color: #fff;
-    outline: none;
-    border-radius: 4px;
-    &.blue {
-      background: $blue;
-      border: 0.5px solid $blue;
-      &:hover {
-        background: darken($blue, 10);
-        border: 0.5px solid darken($blue, 10);
-      }
-      &:focus {
-        background: darken($blue, 15);
-        border: 0.5px solid darken($blue, 15);
-      }
-    }
-    &:disabled {
-      background: $grayButton;
-      border: 0.5px solid darken($grayButton, 15);
-    }
-  }
-  &__link {
-    font-family: $adminFont;
-    font-size: 10.5px;
-    line-height: 12px;
-    margin-right: 16px;
-    color: $blue;
-    text-decoration: none;
-    &:hover {
-      color: darken($blue, 10);
-    }
-    &:active {
-      color: darken($blue, 20);
-    }
-  }
-  &__select {
-    background: #fff;
-    font-family: $adminFont;
-    padding: 8px;
-    outline: none;
-    width: 110px;
-    border: $adminBorder;
-    box-sizing: border-box;
-    border-radius: 4px;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 13px;
-    &:hover,
-    &:active,
-    &:focus {
-      outline: none;
-    }
-  }
-  &__heading {
-    box-sizing: border-box;
-    font-family: $adminFont;
-    color: $adminFontColor;
-    font-weight: normal;
-    font-size: 29px;
-    line-height: 33px;
-  }
-}
-
-@media (max-width: $tablet) {
-  .admin-panel {
-    &__container {
-      grid-template-columns: 57.5px 1fr;
-      grid-template-rows: 68.5px 1fr 68.5px;
-      &__content {
-        padding: 14px;
+      &__button {
+        background: #e9ecef;
+        text-align: center;
+        width: 66px;
+        font-weight: normal;
+  
+        &:hover {
+          background: darken(#e9ecef, 10);
+        }
+        &:active,
+        &:focus {
+          background: darken(#e9ecef, 20);
+        }
       }
     }
   }
-}
-@media (max-width: $smart) {
-  .admin {
-    &__heading {
-      margin: 5px 15px;
-      font-size: 20px;
-    }
-  }
-  .admin-panel {
-    &__container {
-      &__content {
-        background: #fff;
-        padding: 0px;
+  
+  @media (max-width: 1150px) {
+    .admin-panel {
+      &__container {
+        grid-template-columns: 57.5px 1fr;
+        grid-template-rows: 68.5px 1fr 68.5px;
+        &__content {
+          padding: 14px;
+        }
       }
     }
   }
-}
+  @media (max-width: $smart) {
+    .admin {
+      &__heading {
+        margin: 5px 15px;
+        font-size: 20px;
+      }
+      &__hello-text {
+        font-size: 30px;
+        line-height: 28px;
+      }
+    }
+    .admin-panel {
+      &__container {
+        &__content {
+          background: #fff;
+          padding: 0px;
+        }
+      }
+    }
+  }
