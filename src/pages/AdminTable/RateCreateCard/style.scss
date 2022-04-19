@@ -1,0 +1,39 @@
+@import '../../../variables.scss';
+.create-rate-block {
+  @include adminBlock;
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0px auto;
+  &__btn-bar {
+    display: flex;
+    padding: 13px 13px 0px;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: center;
+    height: min-content;
+  }
+}
+@media (max-width: 450px) {
+  .create-rate-block {
+    border-radius: 0px;
+    box-shadow: none;
+    height: 100%;
+    padding: 22px 22px 0px 22px;
+    input {
+      min-width: 220px;
+    }
+    &__btn-bar{
+        position: fixed;
+        bottom: 68px;
+        flex-direction: column;
+        padding: 0px;
+        button{
+            width: 100%;
+        }
+    }
+  }
+}

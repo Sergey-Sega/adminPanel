@@ -1,0 +1,219 @@
+@import '../../../variables.scss';
+.car-edit__container {
+  * {
+    font-family: $adminFont;
+    color: $adminFontColor;
+  }
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  &__car-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 335px;
+    margin-right: 28px;
+    @include adminBlock;
+    &__img {
+      padding: 22px;
+    }
+    h2 {
+      font-weight: normal;
+      font-size: 24.5px;
+      line-height: 28px;
+      margin: 0px;
+    }
+    h3 {
+      font-weight: normal;
+      font-size: 12.5px;
+      line-height: 14px;
+      margin: 5px;
+    }
+    &__file-form {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 10px 22px 22px 22px;
+      box-sizing: border-box;
+    }
+    &__counter {
+      box-sizing: border-box;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      border-top: $adminBorder;
+      border-bottom: $adminBorder;
+      height: 60px;
+      padding: 16px 22px;
+      &__text {
+        margin: 0px;
+      }
+      &__container {
+        display: block;
+        width: 100%;
+        height: 5px;
+        background: #ffffff;
+        box-shadow: inset 0px 0.5px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+        &__line {
+          display: block;
+          height: 100%;
+          background: $blue;
+          border-radius: 4px;
+          transition: width 0.6s cubic-bezier(0.39, 0.58, 0.57, 1);
+        }
+      }
+    }
+
+    &__description {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 22px;
+      &__text {
+        color: $grayDark;
+        margin-top: 0px;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 15px;
+      }
+    }
+  }
+  &__additional-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 22px;
+    flex: 1 1;
+    @include adminBlock;
+    &__form {
+      h2 {
+        margin-top: 0px;
+        font-weight: 500;
+        font-size: 17.5px;
+        line-height: 21px;
+      }
+      &__group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        fieldset {
+          padding-left: 0px;
+        }
+        &:last-child {
+          flex-direction: column;
+        }
+        span {
+          display: flex;
+          .plus-btn {
+            min-width: 33px;
+            width: 33px;
+            height: 33px;
+            border: $adminBorder;
+            outline: none;
+            margin: 0px 15px;
+            background: #fff;
+            border-radius: 4px;
+            position: relative;
+            padding: 0px;
+            span {
+              width: 100%;
+              height: 100%;
+              opacity: 0.2;
+              &:before,
+              &:after {
+                position: absolute;
+                content: ' ';
+                height: 20px;
+                right: 15.5px;
+                top: 5.5px;
+                width: 2px;
+                background-color: $adminFontColor;
+              }
+              &:hover {
+                opacity: 0.4;
+              }
+              &:before {
+                transform: rotate(90deg);
+              }
+            }
+          }
+        }
+      }
+    }
+    &__btn-bar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      span {
+        display: flex;
+      }
+      button {
+        margin-right: 16px;
+      }
+    }
+  }
+}
+@media (max-width: $desktopMini) {
+  .car-edit__container__additional-block__form__group {
+    flex-direction: column;
+  }
+}
+@media (max-width: 918px) {
+  .car-edit__container {
+    &__additional-block {
+      &__btn-bar {
+        width: 100%;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 10px;
+        overflow: hidden;
+        span {
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+          .admin__button {
+            width: 100%;
+            border-radius: 0px;
+            margin:0px;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 888px){
+  .car-edit__container{
+    &__car-block{
+      margin-right: 19px;
+    }
+  &__additional-block__form__group{
+    fieldset{
+      box-sizing: border-box;
+      width: 100%;
+      padding-right: 16px;
+      .admin__input{
+        min-width: 200px;
+        width: 100%;
+      }
+    }
+  }}
+}
+@media (max-width: $smart){
+  .car-edit__container{
+    flex-direction: column;
+    &__car-block, &__additional-block{
+      width: 100%;
+      border: 0px;
+      border-radius: 0px;
+box-shadow: none;
+    }
+  }
+
+}
