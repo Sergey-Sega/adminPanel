@@ -17,9 +17,11 @@ export default class CityPointMap extends React.Component {
     this.ymaps = null;
     this.onClickHandler = this.onClickHandler.bind(this);
   }
+
   onLoadMap(ymaps) {
     this.ymaps = ymaps;
   }
+
   onClickHandler(event) {
     this.props.handler('');
     const coords = event.get('coords') || event.get('request');

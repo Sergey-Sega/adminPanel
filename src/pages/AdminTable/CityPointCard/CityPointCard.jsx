@@ -12,13 +12,16 @@ export default class CityPointCard extends React.Component {
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.handler = this.handler.bind(this);
   }
+
   onChangeHandler(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
+
   handler(info) {
     this.setState({ address: info });
   }
+
   render() {
     return (
       <>
