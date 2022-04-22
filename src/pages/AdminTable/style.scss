@@ -87,6 +87,9 @@ $logo: url('../../assets/Logo.svg');
         color: #fff;
         background: $blue;
         border: 0.5px solid $blue;
+        &.error{
+          margin-top: 27.5px;
+        }
         &:hover {
           background: darken($blue, 10);
           border: 0.5px solid darken($blue, 10);

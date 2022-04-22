@@ -18,10 +18,12 @@ export default class CarEditCard extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.addColor = this.addColor.bind(this);
   }
+
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
+
   addColor() {
     this.setState((prevState) => ({
       colors: [...prevState.colors, prevState.addColor],
