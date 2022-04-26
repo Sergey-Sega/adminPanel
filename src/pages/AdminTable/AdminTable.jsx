@@ -1,12 +1,15 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import CarEditCard from './CarEditCard/CarEditCard';
+import CarListPage from './CarListPage/CarListPage';
 import CityPointCard from './CityPointCard/CityPointCard';
 import { ErrorPage } from './ErrorPage/ErrorPage';
 import { Footer } from './Footer/Footer';
 import { Header } from './Header/Header';
 import { Orders } from './Orders/Orders';
+import { PointsPage } from './PointsPage/PointsPage';
 import { RateCreateCard } from './RateCreateCard/RateCreateCard';
+import { RatePageList } from './RateListPage/RateListPage';
 import { Sidebar } from './SideBar/SideBar';
 import './style.scss';
 
@@ -25,6 +28,9 @@ export const AdminTable = () => {
               <div className='admin-panel__container__content'>
                  <Switch>
                   <Route exact path='/adminPanel/orders' component={Orders}/>
+                  <Route exact path='/points-list' component={PointsPage} />
+                  <Route exact path='/rate-list' component={RatePageList} />
+                  <Route exact path='/car-list' component={CarListPage} />
                   <Route exact path='/adminPanel/rate-edit-card'
                    component={RateCreateCard}/>
                   <Route exact path='/adminPanel/point-edit-card'
