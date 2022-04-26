@@ -1,0 +1,70 @@
+@import '../../../variables.scss';
+.car-list-page {
+  @include adminBlock;
+  min-height: 414px;
+  display: flex;
+  flex-direction: column;
+  &__container {
+    flex: 1 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    overflow-x: auto;
+  }
+  &__car-card {
+    position: relative;
+    text-align: center;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+      'img name'
+      'img number'
+      'img tank'
+      ' colors  colors'
+      'description description';
+    border: $adminBorder;
+    &__img {
+      grid-area: img;
+      width: 200px;
+      border-right: $adminBorder;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    &__name {
+      grid-area: name;
+    }
+
+    &__number {
+      grid-area: number;
+      border-top: $adminBorder;
+    }
+
+    &__colors {
+      grid-area: colors;
+      border-top: $adminBorder;
+    }
+
+    &__tank {
+      grid-area: tank;
+      border-top: $adminBorder;
+    }
+
+    &__description {
+      grid-area: description;
+      border-top: $adminBorder;
+    }
+  }
+}
+@media(max-width:$tablet){
+  .car-list-page__car-card{
+    width: 100%;
+  }
+}

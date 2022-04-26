@@ -1,0 +1,39 @@
+@import '../../variables.scss';
+.admin-list {
+  width: 100%;
+  text-align: center;
+  flex: 1 1;
+  padding: 10px 0px;
+  &__row {
+    background-color: lighten($blue, 48);
+    &:hover {
+      background-color: lighten($blue, 40);
+    }
+    &.head {
+      background-color: $blue;
+      color: lighten($blue, 48);
+      font-size: 14px;
+      line-height: 16px;
+      font-family: $adminFont;
+      tr {
+        height: 40px;
+      }
+    }
+    &:nth-child(even) {
+      background-color: lighten($blue, 45);
+      &:hover {
+        background-color: lighten($blue, 37);
+      }
+    }
+  }
+  &__cell {
+    padding: 5px;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    font-family: $adminFont;
+    &.delete{
+      color: $red;
+    }
+  }
+}
