@@ -1,10 +1,10 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable max-len */
 import React from 'react';
 import './style.scss';
 import carImg from '../../../assets/car.png';
 import { CarListCard } from './CarListCard';
 import { AdminPagination } from '../../../components/AdminPagination/AdminPagination';
-
 
 export default function CarListPage() {
   const page = 1;
@@ -54,17 +54,10 @@ export default function CarListPage() {
       <div className="car-list-page">
         <div className="car-list-page__container">
           {thisList.map((el) => (
-                <CarListCard
-                  key={el.id}
-                  id={el.id}
-                  img={el.img}
-                  carName={el.carName}
-                  description={el.description}
-                  number={el.number}
-                  color={el.color}
-                  tank={el.tank}
-                />
-              ))}
+            <React.Fragment key={el.id}>
+              <CarListCard el={el} />
+            </React.Fragment>
+          ))}
         </div>
         <AdminPagination page={page} countPages={countPages} />
       </div>

@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import fakeCar from '../../../assets/car.png';
-export const CarListCard = ({ carName, description, number, color, tank }) => {
+
+export const CarListCard = ({ el }) => {
+  const { carName, description, number, color, tank, img, id } = el;
   return (
-    <div className="car-list-page__car-card">
+    <div className="car-list-page__car-card" id={id}>
       <div className="car-list-page__car-card__img">
-        <img src={fakeCar} alt="car" />
+        <img src={img} alt="car" />
       </div>
       <div className="car-list-page__car-card__name">
         <p>{carName}</p>
