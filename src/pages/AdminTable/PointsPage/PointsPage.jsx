@@ -1,59 +1,42 @@
-import React from 'react';
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import { AdminList } from '../../../components/AdminList/AdminList';
+import { Loader } from '../../../components/Loader/Loader';
+import { fetchData } from '../../../service/getData';
+import { CITIES } from '../../../service/urls';
 import './style.scss';
 
 export const PointsPage = () => {
-  const pointsData = [
-      {
-        address: 'Литейный проспект 56',
-        city: 'Санкт-Петербург',
-        name: 'Пункт',
-        id: 51,
-  },
-  {
-        address: 'Московское шоссе',
-        city: 'Самара',
-        name: 'Магнит',
-        id: 61,
-  },
-  {
-    name: 'Администрация',
-    address: 'ул. Большая Садовая, 47',
-    city: 'Ростов-на-Дону',
-    id: 71,
-    },
-    {
-      name: 'Администрация',
-      address: 'ул. Большая Садовая, 47',
-      city: 'Ростов-на-Дону',
-      id: 81,
-      },
-      {
-        name: 'Администрация',
-        address: 'ул. Большая Садовая, 47',
-        city: 'Ростов-на-Дону',
-        id: 21,
-        },
-];
+  const [pointsData, setPointsData] = useState('');
+  const [cityList, setCityList] = useState('');
+  const [city, setCity] = useState('');
+  const [sort, setSort] = useState('name');
+  const [trend, setTrend] = useState('1');
 
-  const cityList = [
-    {
-    name: 'Санкт-Петербург',
-    id: 1125125,
-},
-{
-    name: 'Ульяновск',
-    id: 2125125,
-},
-{
-    name: 'Самара',
-    id: 3125125,
-},
-{
-    name: 'Нижний Новгород',
-    id: 4125125,
-},
-    ];
+  useEffect(() => {
+    setPointsData('');
+    fetchData(
+      `db/point?${city && '&cityId=' + city}${
+        sort && `&sort[${sort}]=${trend}`
+      }`,
+    )
+      .then((res) => {
+        setPointsData(
+          res.data.map(
+            (el) =>
+              (el = {
+                address: el.address,
+                name: el.name,
+                id: el.id,
+                city: el.cityId?.name,
+              }),
+          ),
+        );
+      })
+      .then(() => fetchData(CITIES).then(({ data }) => setCityList(data)))
+      .catch((err) => console.error('ERROR', err));
+  }, [city, sort, trend]);
 
   const columns = [
     { name: 'Адрес', dataName: 'address' },
@@ -61,36 +44,65 @@ export const PointsPage = () => {
     { name: 'Город', dataName: 'city' },
   ];
 
+  function filterHandler(event) {
+    const { name, value } = event.target;
+    if (name == 'cityId') {
+      setCity(value);
+    } else {
+      switch (value) {
+        case 'nameUp':
+          setSort('name');
+          setTrend('-1');
+          break;
+        case 'addressUp':
+          setSort('address');
+          setTrend('-1');
+          break;
+        case 'nameDown':
+          setSort('name');
+          setTrend('1');
+          break;
+        case 'addressDown':
+          setSort('address');
+          setTrend('1');
+          break;
+        default:
+          history.push('/admin/error-page/');
+      }
+    }
+  }
+
   return (
     <>
-      <h1 className='admin__heading'>Список точек выдачи</h1>
-      <div className='points-page'>
-        <div className='points-page__sort'>
+      <h1 className="admin__heading">Список точек выдачи</h1>
+      <div className="points-page">
+        <div className="points-page__sort">
           <select
-            className='admin__select'
-            name='cityId'
+            className="admin__select"
+            name="cityId"
+            onChange={filterHandler}
           >
-            <option value=''>Все города</option>
-            {cityList.map((el) => (
-                <option key={el.id} value={el.id}>
-                  {el.name}
-                </option>
-              ))}
+            <option value="">Все города</option>
+            {cityList
+              ? cityList.map((el) => (
+                  <option key={el.id} value={el.id}>
+                    {el.name}
+                  </option>
+                ))
+              : null}
           </select>
           <select
-            className='admin__select'
-            name='sort'
+            onChange={filterHandler}
+            className="admin__select"
+            name="sort"
           >
-            <option value='nameDown'>По названию А-Я ↓</option>
-            <option value='nameUp'>По названию Я-А ↑</option>
-            <option value='addressUp'>По адресу Я-А ↑</option>
-            <option value='addressDown'>По адресу А-Я ↓</option>
+            <option value="nameDown">По названию А-Я ↓</option>
+            <option value="nameUp">По названию Я-А ↑</option>
+            <option value="addressUp">По адресу Я-А ↑</option>
+            <option value="addressDown">По адресу А-Я ↓</option>
           </select>
         </div>
-          <AdminList
-            columns={columns}
-            data={pointsData}
-          />
+        {pointsData ? <AdminList columns={columns} data={pointsData} /> : <Loader/>}
       </div>
     </>
   );
