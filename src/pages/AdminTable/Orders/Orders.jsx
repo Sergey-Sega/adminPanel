@@ -6,14 +6,16 @@ import fakeCar from '../../../assets/car.png';
 import { useState } from 'react';
 import { CustomCheckbox } from '../../../components/CustomCheckBox/CustomCheckBox';
 import { AdminPagination } from '../../../components/AdminPagination/AdminPagination';
-
+import { SelectFilter } from '../../../components/SelectFilter/SelectFilter';
 import { CARS, CITIES, ORDER_STATUS } from '../../../service/urls';
 import { fetchData } from '../../../service/getData';
+import { Loader } from '../../../components/Loader/Loader';
 
 export const Orders = () => {
- const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [currentOrder, setCurrentOrder] = useState({});
   const [countPages, setCountPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const [filterList, setFilterList] = useState({
     cities: [],
     cars: [],
@@ -33,12 +35,16 @@ export const Orders = () => {
 
   useEffect(() => {
     getOrderTable();
-    createFilters();
   }, [page]);
+
+  useEffect(()=>{
+    createFilters();
+  }, []);
 
   function getOrderTable() {
     const { carId, date, cityId, status } = filter;
-   fetchData(
+    setIsLoading(true);
+    fetchData(
       `db/order?page=${page - 1}&limit=1&createdAt[$gt]=${date}${
         carId && '&carId=' + carId
       }${cityId && '&cityId=' + cityId}${status && '&orderStatusId=' + status}`,
@@ -49,7 +55,8 @@ export const Orders = () => {
       })
       .catch((err) => {
         console.error('ERROR', err);
-      });
+      }).finally(()=>
+      setIsLoading(false));
   }
 
   function filterHandler(event) {
@@ -128,6 +135,35 @@ export const Orders = () => {
     }
   }
 
+  const selectList = [
+    {
+      name: 'date',
+      options: [
+        { id: 'month', name: 'За месяц' },
+        { id: 'week', name: 'За неделю' },
+        { id: 'day', name: 'За сутки' },
+        { id: 'hours', name: 'За три часа' },
+      ],
+      defaultOption: { label: 'За все время', value: 'all' },
+    },
+    {
+      name: 'carId',
+      options: filterList.cars,
+      defaultOption: { label: 'Все марки', value: '' },
+    },
+    {
+      name: 'cityId',
+      options: filterList.cities,
+      defaultOption: { label: 'Все города', value: '' },
+    },
+    {
+      name: 'status',
+      options: filterList.statuses,
+      defaultOption: { label: 'Все статусы', value: '' },
+    },
+  ];
+  const shouldShowNoResult = !Object.values(currentOrder ?? {}).length;
+
   return (
     <>
       <h1 className="admin__heading">Заказы</h1>
@@ -135,58 +171,21 @@ export const Orders = () => {
         <div className="order-block__sort-container">
           <span onClick={createFilters} className="filter-icon"></span>
           <form className="order-block__sort-container__sort">
-            <select
-              onChange={filterHandler}
-              name="date"
-              className="admin__select"
-            >
-              <option value="all">За все время</option>
-              <option value="month">За месяц</option>
-              <option value="week">За неделю</option>
-              <option value="day">За сутки</option>
-              <option value="hours">За три часа</option>
-            </select>
-            <select
-              onChange={filterHandler}
-              className="admin__select"
-              name="carId"
-            >
-              <option value="">Любая марка</option>
-              {filterList &&
-                filterList.cars.map((el) => (
-                  <option key={el.id} value={el.id}>
-                    {el.name}
-                  </option>
-                ))}
-            </select>
-            <select
-              onChange={filterHandler}
-              className="admin__select"
-              name="cityId"
-            >
-              <option value="">Все города</option>
-              {filterList &&
-                filterList.cities.map((el) => (
-                  <option key={el.id} value={el.id}>
-                    {el.name}
-                  </option>
-                ))}
-            </select>
-            <select
-              onChange={filterHandler}
-              className="admin__select"
-              name="status"
-            >
-              <option value="">Все статусы</option>
-              {filterList &&
-                filterList.statuses.map((el) => (
-                  <option key={el.id} value={el.id}>
-                    {el.name}
-                  </option>
-                ))}
-            </select>
+            {selectList.map(({ name, options, defaultOption }) => (
+              <SelectFilter
+                name={name}
+                options={options}
+                className="admin__select"
+                onChange={filterHandler}
+                key={name}
+                defaultOption={defaultOption}
+              />
+            ))}
             <button
-              onClick={getOrderTable}
+              onClick={()=> {
+                setPage(1);
+                getOrderTable();
+}}
               className="admin__button blue"
               type="button"
             >
@@ -194,8 +193,9 @@ export const Orders = () => {
             </button>
           </form>
         </div>
-        <div className="order-block__info">
-          {currentOrder ? (
+        {!isLoading &&
+        (<div className="order-block__info">
+          {!shouldShowNoResult ? (
             <>
               <span className="order-block__info__part">
                 <img
@@ -255,8 +255,8 @@ export const Orders = () => {
           ) : (
             'Заказы не найдены'
           )}
-        </div>
-        {currentOrder && (
+        </div>)}
+        {countPages > 1 && !isLoading && (
           <AdminPagination
             paginationHandler={paginationHandler}
             setPage={setPage}
@@ -264,6 +264,7 @@ export const Orders = () => {
             countPages={countPages}
           />
         )}
+        {isLoading && <Loader/>}
       </div>
     </>
   );

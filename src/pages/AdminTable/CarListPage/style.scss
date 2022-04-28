@@ -4,6 +4,8 @@
   min-height: 414px;
   display: flex;
   flex-direction: column;
+  font-family: $adminFont;
+  font-weight: normal;
   &__container {
     flex: 1 1;
     display: flex;
@@ -16,6 +18,10 @@
     position: relative;
     text-align: center;
     display: grid;
+    -webkit-box-shadow: 13px 2px 14px 0px rgba(34, 43, 80, 0.2);
+    -moz-box-shadow: 13px 2px 14px 0px rgba(34, 43, 80, 0.2);
+    box-shadow: 13px 2px 14px 0px rgba(34, 43, 80, 0.2);
+    border-radius: 10px;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas:
       'img name'
@@ -36,6 +42,7 @@
         width: 100%;
         max-width: 300px;
         object-fit: scale-down;
+        border-radius: 10px;
       }
     }
     

@@ -13,8 +13,10 @@ export const PointsPage = () => {
   const [city, setCity] = useState('');
   const [sort, setSort] = useState('name');
   const [trend, setTrend] = useState('1');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     setPointsData('');
     fetchData(
       `db/point?${city && '&cityId=' + city}${
@@ -35,13 +37,15 @@ export const PointsPage = () => {
         );
       })
       .then(() => fetchData(CITIES).then(({ data }) => setCityList(data)))
-      .catch((err) => console.error('ERROR', err));
+      .catch((err) => console.error('ERROR', err)).finally(()=> {
+setIsLoading(false);
+});
   }, [city, sort, trend]);
 
   const columns = [
+    { name: 'Город', dataName: 'city' },
     { name: 'Адрес', dataName: 'address' },
     { name: 'Название', dataName: 'name' },
-    { name: 'Город', dataName: 'city' },
   ];
 
   function filterHandler(event) {
@@ -71,7 +75,7 @@ export const PointsPage = () => {
       }
     }
   }
-
+  const shouldShowNoResult = !Object.values(pointsData ?? {}).length;
   return (
     <>
       <h1 className="admin__heading">Список точек выдачи</h1>
@@ -102,7 +106,8 @@ export const PointsPage = () => {
             <option value="addressDown">По адресу А-Я ↓</option>
           </select>
         </div>
-        {pointsData ? <AdminList columns={columns} data={pointsData} /> : <Loader/>}
+        {!isLoading && (!shouldShowNoResult ? <AdminList columns={columns} data={pointsData}/> : (<><h1 className='error_points'>Нет доступных точек выдачи</h1></>))}
+        {isLoading && <Loader/>}
       </div>
     </>
   );
