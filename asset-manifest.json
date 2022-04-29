@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/adminPanel/static/css/main.74276781.css",
+    "main.css": "/adminPanel/static/css/main.e7c26f43.css",
     "main.js": "/adminPanel/static/js/main.e34a487f.js",
     "static/media/Roboto-Medium.ttf": "/adminPanel/static/media/Roboto-Medium.13a29228654d5c5ec9c4.ttf",
     "static/media/Roboto-Regular.ttf": "/adminPanel/static/media/Roboto-Regular.03523cf578d69fa92322.ttf",
@@ -22,11 +22,11 @@
     "static/media/Error.svg": "/adminPanel/static/media/Error.9ae656e3678d67bca3ec.svg",
     "static/media/CarList.svg": "/adminPanel/static/media/CarList.738fc3f8ee3853ab7434.svg",
     "static/media/Orders.svg": "/adminPanel/static/media/Orders.f2c1be7b09e938c0cdee.svg",
-    "main.74276781.css.map": "/adminPanel/static/css/main.74276781.css.map",
+    "main.e7c26f43.css.map": "/adminPanel/static/css/main.e7c26f43.css.map",
     "main.e34a487f.js.map": "/adminPanel/static/js/main.e34a487f.js.map"
   },
   "entrypoints": [
-    "static/css/main.74276781.css",
+    "static/css/main.e7c26f43.css",
     "static/js/main.e34a487f.js"
   ]
 }
