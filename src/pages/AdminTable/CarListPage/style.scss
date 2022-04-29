@@ -78,3 +78,15 @@
     }
   }
 }
+@media (max-width: 1000px) {
+  .car-list-page{
+  &__container{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+&__car-card{
+  width: 85%;
+}
+}}
