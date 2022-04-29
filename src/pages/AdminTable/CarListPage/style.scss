@@ -9,16 +9,17 @@
   &__container {
     flex: 1 1;
     display: flex;
+    overflow-y: hidden;
     flex-direction: row;
-    gap: 35px;
+    width: 97%;
     justify-content: space-between;
     padding: 20px;
-    overflow-x: auto;
   }
   &__car-card {
     position: relative;
     text-align: center;
     display: grid;
+    width: 24%;
     -webkit-box-shadow: 13px 2px 14px 0px rgba(34, 43, 80, 0.2);
     -moz-box-shadow: 13px 2px 14px 0px rgba(34, 43, 80, 0.2);
     box-shadow: 13px 2px 14px 0px rgba(34, 43, 80, 0.2);
@@ -33,7 +34,7 @@
     border: $adminBorder;
     &__img {
       grid-area: img;
-      width: 200px;
+       min-width: 100px;
       border-right: $adminBorder;
       display: flex;
       flex-direction: column;
@@ -44,31 +45,35 @@
         max-width: 300px;
         object-fit: scale-down;
         border-radius: 10px;
+        padding: 10px;
       }
     }
     
     &__name {
       grid-area: name;
+      padding: 10px;
     }
 
     &__number {
       grid-area: number;
+      padding: 10px;
       border-top: $adminBorder;
     }
 
     &__colors {
       grid-area: colors;
+      padding: 10px;
       border-top: $adminBorder;
     }
 
     &__tank {
       grid-area: tank;
+      padding: 10px;
       border-top: $adminBorder;
     }
 
     &__description {
       grid-area: description;
-      max-width: 255px;
       border-top: $adminBorder;
     }
   }
