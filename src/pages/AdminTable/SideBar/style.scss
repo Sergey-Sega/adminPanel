@@ -92,7 +92,7 @@ $logo: url("../../../assets/LogoIcon.svg");
     }
   }
 }
-@media (max-width: $tablet) {
+@media (max-width: 1150px) {
   .admin-panel__container__sidebar {
     width: 57px;
     overflow: hidden;
