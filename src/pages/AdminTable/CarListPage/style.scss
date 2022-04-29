@@ -4,18 +4,26 @@
   min-height: 414px;
   display: flex;
   flex-direction: column;
+  font-family: $adminFont;
+  font-weight: normal;
   &__container {
     flex: 1 1;
     display: flex;
+    overflow-y: hidden;
     flex-direction: row;
+    width: 97%;
     justify-content: space-between;
     padding: 20px;
-    overflow-x: auto;
   }
   &__car-card {
     position: relative;
     text-align: center;
     display: grid;
+    width: 24%;
+    -webkit-box-shadow: 13px 2px 14px 0px rgba(34, 43, 80, 0.2);
+    -moz-box-shadow: 13px 2px 14px 0px rgba(34, 43, 80, 0.2);
+    box-shadow: 13px 2px 14px 0px rgba(34, 43, 80, 0.2);
+    border-radius: 10px;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas:
       'img name'
@@ -26,7 +34,7 @@
     border: $adminBorder;
     &__img {
       grid-area: img;
-      width: 200px;
+       min-width: 100px;
       border-right: $adminBorder;
       display: flex;
       flex-direction: column;
@@ -35,25 +43,32 @@
       img {
         width: 100%;
         max-width: 300px;
+        object-fit: scale-down;
+        border-radius: 10px;
+        padding: 10px;
       }
     }
-
+    
     &__name {
       grid-area: name;
+      padding: 10px;
     }
 
     &__number {
       grid-area: number;
+      padding: 10px;
       border-top: $adminBorder;
     }
 
     &__colors {
       grid-area: colors;
+      padding: 10px;
       border-top: $adminBorder;
     }
 
     &__tank {
       grid-area: tank;
+      padding: 10px;
       border-top: $adminBorder;
     }
 
@@ -63,8 +78,15 @@
     }
   }
 }
-@media(max-width:$tablet){
-  .car-list-page__car-card{
-    width: 100%;
-  }
+@media (max-width: 1000px) {
+  .car-list-page{
+  &__container{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
 }
+&__car-card{
+  width: 85%;
+}
+}}

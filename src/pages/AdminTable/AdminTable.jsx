@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import CarEditCard from './CarEditCard/CarEditCard';
 import CarListPage from './CarListPage/CarListPage';
@@ -14,6 +14,7 @@ import { Sidebar } from './SideBar/SideBar';
 import './style.scss';
 
 export const AdminTable = () => {
+  const ref = useRef();
   return (
     <div className='admin-panel'>
          <div className='admin-panel__container'>
@@ -22,8 +23,8 @@ export const AdminTable = () => {
                >
                  <Header/>
               </div>
-              <div className='admin-panel__container__sidebar'>
-                <Sidebar/>
+              <div className='admin-panel__container__sidebar' ref={ref}>
+                <Sidebar sidebarRef={ref}/>
               </div>
               <div className='admin-panel__container__content'>
                  <Switch>

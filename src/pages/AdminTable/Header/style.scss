@@ -102,7 +102,7 @@ $notifications: url('../../../assets/Notifications.svg');
   }
 }
 
-@media (min-width: $tablet) {
+@media (min-width: 1150px) {
     .searching-form .shape {
           position: absolute !important;
           left: 315px !important;
