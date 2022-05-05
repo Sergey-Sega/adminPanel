@@ -9,7 +9,7 @@ import { fetchData } from '../../../service/getData';
 import { CARS } from '../../../service/urls';
 import { SelectFilter } from '../../../components/SelectFilter/SelectFilter';
 
-export default function CarListPage() {
+export const CarListPage = () => {
   const [myCars, setMyCars] = useState('');
   const [filterCar, setFilterCar] =useState({});
   const [page, setPage] = useState(1);
@@ -135,4 +135,4 @@ export default function CarListPage() {
       </div>
     </>
   );
-}
+};

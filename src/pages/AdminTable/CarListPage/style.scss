@@ -32,6 +32,19 @@
       ' colors  colors'
       'description description';
     border: $adminBorder;
+    &:hover{
+      .mask{
+        display: flex;}
+    }
+    .mask{
+      display: none;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: #ffffff8a;
+  }
     &__img {
       grid-area: img;
        min-width: 100px;

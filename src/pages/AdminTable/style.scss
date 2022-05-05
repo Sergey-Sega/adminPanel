@@ -224,7 +224,22 @@ $logo: url('../../assets/Logo.svg');
       line-height: 13px;
       color: $mainBlack;
       padding-left: 11px;
-    }
+      &:active, &:focus{
+        border-color:$blue;
+        box-shadow: 0px 2.5px 5.5px rgba(24, 93, 196, 0.1);
+            }
+            &__error-text{
+              font-style: normal;
+                    font-weight: normal;
+                    font-size: 10px;
+                    line-height: 11px;
+                    color: $red!important;
+                    top: 50px;
+            }
+            &.error{
+              border-color: $red;
+            }
+          }
     &__textarea {
       font-weight: normal;
       font-size: 12.5px;

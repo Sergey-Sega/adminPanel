@@ -1,0 +1,37 @@
+@import '../../variables.scss';
+.admin__alert {
+  width: 100%;
+  background: $mainAccent;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: fixed;
+  left: 0px;
+  box-sizing: border-box;
+  padding-left: 300px;
+  color: #fff;
+  height: 42px;
+  align-items: center;
+  font-family: $adminFont;
+  font-style: normal;
+font-weight: normal;
+font-size: 13px;
+line-height: 15px;
+  p{
+padding: 0px 29px;
+  }
+  button{
+      margin: 0px;
+      padding:  0px 39px;
+      background: none;
+      color: inherit;
+      border: none;
+      outline:none;
+  }
+}
+@media(max-width:1150){
+    .admin__alert {
+        top: 69.5px;
+        padding-left: 47px;
+    }
+}

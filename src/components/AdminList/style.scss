@@ -34,6 +34,7 @@
     font-family: $adminFont;
     &.delete{
       color: $red;
+      cursor: pointer;
     }
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { AdminList } from '../../../components/AdminList/AdminList';
 import { fetchData } from '../../../service/getData';
@@ -6,8 +7,13 @@ import './style.scss';
 import {Loader} from '../../../components/Loader/Loader';
 export const RatePageList = () => {
   const [rateData, setRateData] = useState('');
+  const [isDelete, setDelete] =useState(false);
 
   useEffect(()=>{
+    getRateData();
+  }, []);
+
+  const getRateData = () => {
     fetchData(RATE).then(({ data }) =>
     setRateData( data.map(
         (el) =>
@@ -21,7 +27,7 @@ export const RatePageList = () => {
     ),
   )
   .catch(() => history.push('/adminPanel/errorpage'));
-  }, []);
+  };
 
   const columns = [
     { name: 'Название тарифа', dataName: 'name' },
@@ -37,6 +43,9 @@ export const RatePageList = () => {
           <AdminList
             columns={columns}
             data={rateData}
+            tableName='db/rate/'
+            setDelete={setDelete}
+            update={getRateData}
           />) : <Loader/>}
       </div>
     </>

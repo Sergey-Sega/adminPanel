@@ -1,11 +1,26 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { AdminAlert } from '../../../components/AdminAlert/AdminAlert';
 import AdminInput from '../../../components/AdminInput/AdmitInput';
+import { createData, fetchData, putData } from '../../../service/getData';
+import { RATE } from '../../../service/urls';
 import './style.scss';
 export const RateCreateCard = () => {
+  const [rateTypes, setRateTypes] = useState([]);
   const [price, setPrice] = useState(1);
   const [name, setName] = useState('');
   const [unit, setUnit] = useState('');
+  const [rates, setRates] = useState([]);
+  const [alert, setAlert] = useState(false);
+
+  useEffect(() => {
+    fetchData('db/rateType')
+      .then(({ data }) => setRateTypes(data))
+      .catch((err) => console.error(err));
+      fetchData('db/rate')
+      .then(({ data }) => setRates(data))
+      .catch((err) => console.error(err));
+  }, []);
 
   const inputs = [
     {
@@ -46,8 +61,42 @@ export const RateCreateCard = () => {
     }
   }
 
+  const createRate = () => {
+    setAlert(false);
+    const rateTypeId=rateTypes.find((el) => el.unit === unit || el.name === name);
+    const rateId=rates.find((el) => el.rateTypeId.unit === unit || el.rateTypeId.name === name);
+    if (rateTypeId) {
+      const body = {
+        price: price,
+        rateTypeId: {
+          id: rateTypeId.id,
+        },
+      };
+      putData(`${RATE}/${rateId.id}`, body);
+    } else {
+     createData(`db/rateType`, {
+        unit: unit,
+        name: name,
+      })
+        .then(({data}) =>
+          createData( RATE, {
+            price: price,
+            rateTypeId: {
+              id: data.id,
+            },
+          }),
+        );
+    }
+    setPrice(1),
+    setName(''),
+    setUnit(''),
+    setAlert(true);
+  };
   return (
     <>
+    {alert ? (
+    <AdminAlert text='Успех, тариф создан!'
+        closeAction={()=> setAlert(false)}/>) : null}
       <h1 className='admin__heading'>Создание тарифов</h1>
       <div className='create-rate-block'>
         <div>
@@ -66,6 +115,7 @@ export const RateCreateCard = () => {
         <div className='create-rate-block__btn-bar'>
           <button
             disabled={(!price || !unit || !name) && 'disabled'}
+            onClick={createRate}
             className='admin__button blue'
           >
             Сохранить

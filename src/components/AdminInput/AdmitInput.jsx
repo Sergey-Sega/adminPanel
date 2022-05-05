@@ -8,6 +8,7 @@ export default function AdminInput({
   placeholder,
   errorText,
   isNumber,
+  onBlur,
 }) {
   return (
     <fieldset className='admin__fieldset'>
@@ -20,6 +21,7 @@ export default function AdminInput({
         name={name}
         value={value}
         placeholder={placeholder}
+        onBlur={onBlur}
       />
       {error && <p className='admin__input__error-text'>{errorText}</p>}{' '}
     </fieldset>

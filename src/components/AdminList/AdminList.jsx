@@ -1,6 +1,24 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { deleteData } from '../../service/getData';
 import './style.scss';
-export const AdminList = ({ columns, data }) => {
+export const AdminList = ({ columns, data, setDelete, tableName, update }) => {
+  const history = useHistory();
+
+  const deleteRow = (id) => {
+    deleteData(`${tableName}${id}`)
+      .then(() => {
+        if (update) {
+          update();
+        }
+      })
+      .then(() => setDelete(true))
+      .catch((err) => {
+        console.error('ERROR', err);
+        history.push('/adminPanel/errorpage/');
+      });
+  };
+
   return (
     <table className='admin-list'>
       <thead className='admin-list__row head'>
@@ -23,6 +41,7 @@ export const AdminList = ({ columns, data }) => {
               ))}
               <td
                 className='admin-list__cell delete'
+                onClick={() => deleteRow(val.id)}
               >
                 ✖
               </td>
