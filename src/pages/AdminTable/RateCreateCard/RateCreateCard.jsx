@@ -62,7 +62,6 @@ export const RateCreateCard = () => {
   }
 
   const createRate = () => {
-    setAlert(false);
     const rateTypeId=rateTypes.find((el) => el.unit === unit || el.name === name);
     const rateId=rates.find((el) => el.rateTypeId.unit === unit || el.rateTypeId.name === name);
     if (rateTypeId) {
@@ -73,6 +72,10 @@ export const RateCreateCard = () => {
         },
       };
       putData(`${RATE}/${rateId.id}`, body);
+      setAlert(true);
+    setTimeout(() => {
+      setAlert(false);
+    }, 2000);
     } else {
      createData(`db/rateType`, {
         unit: unit,
@@ -91,12 +94,14 @@ export const RateCreateCard = () => {
     setName(''),
     setUnit(''),
     setAlert(true);
+    setTimeout(() => {
+      setAlert(false);
+    }, 2000);
   };
   return (
     <>
     {alert ? (
-    <AdminAlert text='Успех, тариф создан!'
-        closeAction={()=> setAlert(false)}/>) : null}
+    <AdminAlert text='Успех, тариф сохранен!'/>) : null}
       <h1 className='admin__heading'>Создание тарифов</h1>
       <div className='create-rate-block'>
         <div>

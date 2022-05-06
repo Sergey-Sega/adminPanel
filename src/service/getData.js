@@ -5,12 +5,11 @@ import { APPLICATION_ID, BASE_URL } from '../config';
 
 const axiosInstanse = axios.create({baseURL: BASE_URL});
 
-const headers = {
-  'X-Api-Factory-Application-Id': APPLICATION_ID,
-  Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-};
-
 export const fetchData = async (url) => {
+  const headers = {
+    'X-Api-Factory-Application-Id': APPLICATION_ID,
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+  };
   try {
     const response = await axiosInstanse({
       url,
@@ -24,6 +23,10 @@ export const fetchData = async (url) => {
 };
 
 export const deleteData = async (url) => {
+  const headers = {
+    'X-Api-Factory-Application-Id': APPLICATION_ID,
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+  };
   try {
     const response = await axiosInstanse({
       url,
@@ -37,6 +40,10 @@ export const deleteData = async (url) => {
 };
 
 export const createData = async (url, body) => {
+  const headers = {
+    'X-Api-Factory-Application-Id': APPLICATION_ID,
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+  };
   try {
     const response = await axiosInstanse({
       url,
@@ -51,6 +58,10 @@ export const createData = async (url, body) => {
 };
 
 export const putData = async (url, body) => {
+  const headers = {
+    'X-Api-Factory-Application-Id': APPLICATION_ID,
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+  };
   try {
     const response = await axiosInstanse({
       url,

@@ -29,7 +29,7 @@ export const AdminTable = () => {
               </div>
               <div className='admin-panel__container__content'>
                  <Switch>
-                   <Route exact path='/adminPanel' component={AdminWelcome}/>
+                   <Route exact path='/' component={AdminWelcome}/>
                   <Route exact path='/adminPanel/orders' component={Orders}/>
                   <Route exact path='/points-list' component={PointsPage} />
                   <Route exact path='/rate-list' component={RatePageList} />

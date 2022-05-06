@@ -48,7 +48,6 @@ export const CarEditCard = () => {
   const [procentes, setProcentes] = useState(0);
   const [category, setCategory] = useState([]);
   const colorRef = useRef();
-  const colRef = useRef();
   const [error, setError] = useState(false);
   const [state, setState] = useState(initialState);
 
@@ -117,24 +116,28 @@ export const CarEditCard = () => {
   const removeColor = (e) => {
     console.log(e.currentTarget.dataset.value);
     const newColors = e.currentTarget.dataset.value ? state.colors.filter((color)=> color !== e.currentTarget.dataset.value) : [];
-    console.log(newColors);
     setState((state) => ({ ...state, colors: newColors }));
   };
 
   const createCar = () => {
     if (Object.values(carData).length !== 0) {
+      const showError = category.every((el)=> el.name !== state.categoryId.name);
+      setError(showError);
       putData(`db/car/${carId}`, state).then(() => setAlert(true));
+      setTimeout(() => {
+        setAlert(false);
+      }, 2000);
     } else {
       const showError = category.every((el)=> el.name !== state.categoryId.name);
       setError(showError);
-      if (showError) throw new Error('Мы тебя не звали');
+      if (showError) throw new Error('Скорректируйте карточку машины');
       createData(CARS, state)
         .then(() => setAlert(true))
         .then(() => {
           clearState();
         })
         .catch((err) => {
-          history.push('/admin/errorpage');
+          history.push('/adminPanel/errorpage');
           console.error('ERROR', err);
         });
     }
@@ -171,7 +174,7 @@ export const CarEditCard = () => {
       {alert ? (
         <AdminAlert
           text="Успех, машина сохранена!"
-          closeAction={() => setAlert(false)}
+          // closeAction={() => setAlert(false)}
         />
       ) : null}
       <h1 className="admin__heading">Карточка автомобиля</h1>

@@ -113,8 +113,3 @@ $logo: url("../../../assets/LogoIcon.svg");
     }
   }
 }
-@media (max-width: $smart) {
-  .admin-panel__container__sidebar:hover {
-    width: 250px;
-  }
-}

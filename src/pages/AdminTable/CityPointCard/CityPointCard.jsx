@@ -51,6 +51,9 @@ export const CityPointCard = () => {
       })
       .catch((err) => console.log(err));
       setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 2000);
   };
 
   return (

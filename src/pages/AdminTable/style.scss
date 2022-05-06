@@ -295,9 +295,9 @@ $logo: url('../../assets/Logo.svg');
       &__container {
         grid-template-columns: 57.5px 1fr;
         grid-template-rows: 68.5px 1fr 68.5px;
-        &__content {
-          padding: 14px;
-        }
+        // &__content {
+        //   padding: 14px;
+        // }
       }
     }
   }
