@@ -174,7 +174,7 @@ export const CarEditCard = () => {
       {alert ? (
         <AdminAlert
           text="Успех, машина сохранена!"
-          // closeAction={() => setAlert(false)}
+          closeAction={() => setAlert(false)}
         />
       ) : null}
       <h1 className="admin__heading">Карточка автомобиля</h1>

@@ -101,7 +101,8 @@ export const RateCreateCard = () => {
   return (
     <>
     {alert ? (
-    <AdminAlert text='Успех, тариф сохранен!'/>) : null}
+    <AdminAlert text='Успех, тариф сохранен!'
+    closeAction={() => setAlert(false)}/>) : null}
       <h1 className='admin__heading'>Создание тарифов</h1>
       <div className='create-rate-block'>
         <div>
