@@ -1,8 +1,13 @@
 @import '../../../variables.scss';
 .rate-page {
   @include adminBlock;
-  height: 100%;
   margin-bottom: 20px;
+  min-height: 400px;
   padding: 20px;
   box-sizing: border-box;
+}
+@media (max-width: 435px){
+  .rate-page{
+    width: 380px;
+  }
 }

@@ -4,7 +4,6 @@ import './style.scss';
 import {SidebarLink} from './SideBarLink';
 import { menuSideBar } from '../../../utils/constants';
 export const Sidebar = ({sidebarRef}) => {
-  console.log(sidebarRef.current);
   return (
     <>
       <a className='sidebar__head' onClick={()=> sidebarRef.current.classList.add('widthSide')}>

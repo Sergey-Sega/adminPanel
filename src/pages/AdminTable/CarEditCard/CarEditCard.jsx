@@ -59,8 +59,9 @@ export const CarEditCard = () => {
         +(state.categoryId?.name && 15) +
         +(state.colors?.length && 15) +
         +(!!state.thumbnail?.path && 15) +
-        +(state.description && 25) +
-        +(state.priceMax && 15),
+        +(state.description && 15) +
+        +(state.priceMax && 15) +
+        +(state.number && 10),
     );
   }, [
     state.name,
@@ -69,6 +70,7 @@ export const CarEditCard = () => {
     state.thumbnail?.path,
     state.description,
     state.priceMax,
+    state.number,
   ]);
 
   useEffect(async () => {
@@ -97,7 +99,6 @@ export const CarEditCard = () => {
   const clearState = () => {
     setState(carData ?? initialState);
   };
-
 
   const handleChange = useCallback(
     (prop) => (event) => {
@@ -137,7 +138,6 @@ export const CarEditCard = () => {
           clearState();
         })
         .catch((err) => {
-          history.push('/adminPanel/errorpage');
           console.error('ERROR', err);
         });
     }
@@ -243,6 +243,7 @@ export const CarEditCard = () => {
                 placeholder="Введите модель автомобиля"
                 legend="Модель автомобиля"
                 onChange={handleChange('name')}
+                errorText='Некорректная модель автомобиля'
                 value={state.name ?? ''}
                 name="name"
               />
@@ -283,6 +284,7 @@ export const CarEditCard = () => {
                 placeholder="Введите номер автомобиля"
                 legend="Номер автомобиля"
                 onChange={handleChange('number')}
+                errorText='Некорректный номер'
                 value={state.number ?? ''}
                 name="number"
               />
@@ -299,7 +301,9 @@ export const CarEditCard = () => {
                     className="plus-btn"
                     type="button"
                     onClick={() => {
-                      addColor(colorRef.current.value);
+                      if (colorRef.current.value !=='') {
+addColor(colorRef.current.value);
+}
                       colorRef.current.value = '';
                     }}
                   >
@@ -310,7 +314,7 @@ export const CarEditCard = () => {
               {state.colors?.map((el) => (
                 <label className="checkbox__color" key={el}>
                   <input type="checkbox" readOnly checked />
-                  <span data-value={el} onClick={removeColor}>{el}</span>
+                  <span className='car-edit__container__additional-block__form__group__color' data-value={el} onClick={removeColor}>{el}</span>
                 </label>
               ))}
             </span>

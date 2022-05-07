@@ -62,16 +62,22 @@ export const RateCreateCard = () => {
   }
 
   const createRate = () => {
-    const rateTypeId=rateTypes.find((el) => el.unit === unit || el.name === name);
-    const rateId=rates.find((el) => el.rateTypeId.unit === unit || el.rateTypeId.name === name);
-    if (rateTypeId) {
-      const body = {
-        price: price,
-        rateTypeId: {
-          id: rateTypeId.id,
-        },
-      };
-      putData(`${RATE}/${rateId.id}`, body);
+    const rateType=rateTypes.find((el) => el.unit === unit || el.name === name);
+    const rateId=rates.find((el) => el.rateTypeId.unit === unit || el.rateTypeId.name === name)?.id;
+    const body = {
+      price: price,
+      rateTypeId: {
+        id: rateType?.id,
+      },
+    };
+    if (rateId) {
+      putData(`${RATE}/${rateId}`, body);
+      setAlert(true);
+    setTimeout(() => {
+      setAlert(false);
+    }, 2000);
+    } else if (rateType) {
+      createData(RATE, body);
       setAlert(true);
     setTimeout(() => {
       setAlert(false);
