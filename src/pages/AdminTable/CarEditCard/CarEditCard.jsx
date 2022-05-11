@@ -40,7 +40,7 @@ const initialState = {
 };
 
 export const CarEditCard = () => {
-  const {push} = useHistory();
+  const history = useHistory();
   const location = useLocation();
   const { carId } = useParams();
   const [alert, setAlert] = useState(false);
@@ -74,8 +74,12 @@ export const CarEditCard = () => {
   ]);
 
   useEffect(async () => {
-    const res = await fetchData(CATEGORIES);
-    const data = setCategory(res.data);
+    try {
+      const res = await fetchData(CATEGORIES);
+      const data = setCategory(res.data);
+    } catch (error) {
+      history.push('/adminPanel/errorpage');
+    }
   }, []);
 
   useEffect(() => {
@@ -116,29 +120,47 @@ export const CarEditCard = () => {
 
   const removeColor = (e) => {
     console.log(e.currentTarget.dataset.value);
-    const newColors = e.currentTarget.dataset.value ? state.colors.filter((color)=> color !== e.currentTarget.dataset.value) : [];
+    const newColors = e.currentTarget.dataset.value
+      ? state.colors.filter((color) => color !== e.currentTarget.dataset.value)
+      : [];
     setState((state) => ({ ...state, colors: newColors }));
   };
 
   const createCar = () => {
     if (Object.values(carData).length !== 0) {
-      const showError = category.every((el)=> el.name !== state.categoryId.name);
+      const showError = category.every(
+        (el) => el.name !== state.categoryId.name,
+      );
       setError(showError);
-      putData(`db/car/${carId}`, state).then(() => setAlert(true));
-      setTimeout(() => {
-        setAlert(false);
-      }, 2000);
+      putData(`db/car/${carId}`, state).then((response) => {
+        if (!response) {
+          history.push('/adminPanel/errorpage');
+        } else {
+          setAlert(true);
+          setTimeout(() => {
+            setAlert(false);
+          }, 2000);
+        }
+      });
     } else {
-      const showError = category.every((el)=> el.name !== state.categoryId.name);
+      const showError = category.every(
+        (el) => el.name !== state.categoryId.name,
+      );
       setError(showError);
       if (showError) throw new Error('Скорректируйте карточку машины');
       createData(CARS, state)
-        .then(() => setAlert(true))
+        .then((response) => {
+          if (!response) {
+            history.push('/adminPanel/errorpage');
+          } else {
+            setAlert(true);
+            setTimeout(() => {
+              setAlert(false);
+            }, 2000);
+          }
+        })
         .then(() => {
           clearState();
-        })
-        .catch((err) => {
-          console.error('ERROR', err);
         });
     }
   };
@@ -159,13 +181,15 @@ export const CarEditCard = () => {
   };
 
   const setCategoryId = () => {
-    const categoryId = category.find((el) => state.categoryId.name===el.name)?.id;
-    const description = category.find((el) => state.categoryId.name===el.name)?.description;
-                      if (categoryId) {
-    setState((prevState) =>({
-                        ...prevState,
-                        categoryId: { ...prevState.categoryId, id: categoryId, description },
-                      }));
+    const categoryId = category.find((el) => state.categoryId.name === el.name)
+      ?.id;
+    const description = category.find((el) => state.categoryId.name === el.name)
+      ?.description;
+    if (categoryId) {
+      setState((prevState) => ({
+        ...prevState,
+        categoryId: { ...prevState.categoryId, id: categoryId, description },
+      }));
     }
   };
 
@@ -191,7 +215,9 @@ export const CarEditCard = () => {
           <h3>{state.categoryId?.name || 'Тип автомобиля'}</h3>
           <form action="" className="car-edit__container__car-block__file-form">
             <label className="admin__file-loader" htmlFor="fileLoader">
-              <span className="admin__file-loader__text">Выберите файл...</span>
+              <span className="admin__file-loader__text">
+                Выберите файл... *
+              </span>
               <input
                 id="fileLoader"
                 type="file"
@@ -221,7 +247,7 @@ export const CarEditCard = () => {
           </div>
           <div className="car-edit__container__car-block__description">
             <p className="car-edit__container__car-block__description__text">
-              Описание
+              Описание *
             </p>
             <textarea
               className="admin__textarea"
@@ -241,18 +267,19 @@ export const CarEditCard = () => {
             <span className="car-edit__container__additional-block__form__group">
               <AdminInput
                 placeholder="Введите модель автомобиля"
-                legend="Модель автомобиля"
+                legend="Модель автомобиля *"
                 onChange={handleChange('name')}
-                errorText='Некорректная модель автомобиля'
+                errorText="Некорректная модель автомобиля"
                 value={state.name ?? ''}
                 name="name"
               />
               <AdminInput
                 placeholder="Введите тип автомобиля"
-                legend="Тип автомобиля"
+                legend="Тип автомобиля *"
+                list="type"
                 onBlur={setCategoryId}
                 error={error}
-                errorText='Некорректный тип автомобиля, выберите из существующих например, Спорт, Люкс, Эконом+'
+                errorText="Некорректный тип автомобиля, выберите из существующих"
                 onChange={(e) =>
                   setState({
                     ...state,
@@ -262,19 +289,30 @@ export const CarEditCard = () => {
                 value={state.categoryId?.name ?? ''}
                 name="type"
               />
+              <datalist id="type">
+                {category
+                  ? category.map((el) => {
+                      return (
+                        <option key={el.id} value={el.name} id={el.id}>
+                          {el.name}
+                        </option>
+                      );
+                    })
+                  : null}
+              </datalist>
             </span>
             <span className="car-edit__container__additional-block__form__group">
               <div className="car-edit__container__additional-block__form__group__price">
                 <AdminInput
                   placeholder="Введите стоимость"
-                  legend="Минимальная стоимость аренды"
+                  legend="Минимальная стоимость аренды *"
                   onChange={handleChange('priceMin')}
                   value={state.priceMin ?? ''}
                   name="priceMin"
                 />
                 <AdminInput
                   placeholder="Введите стоимость"
-                  legend="Максимальная стоимость аренды"
+                  legend="Максимальная стоимость аренды *"
                   onChange={handleChange('priceMax')}
                   value={state.priceMax ?? ''}
                   name="priceMax"
@@ -282,14 +320,14 @@ export const CarEditCard = () => {
               </div>
               <AdminInput
                 placeholder="Введите номер автомобиля"
-                legend="Номер автомобиля"
+                legend="Номер автомобиля *"
                 onChange={handleChange('number')}
-                errorText='Некорректный номер'
+                errorText="Некорректный номер"
                 value={state.number ?? ''}
                 name="number"
               />
               <fieldset>
-                <legend>Доступные цвета</legend>
+                <legend>Доступные цвета *</legend>
                 <span>
                   <input
                     type="text"
@@ -301,9 +339,9 @@ export const CarEditCard = () => {
                     className="plus-btn"
                     type="button"
                     onClick={() => {
-                      if (colorRef.current.value !=='') {
-addColor(colorRef.current.value);
-}
+                      if (colorRef.current.value !== '') {
+                        addColor(colorRef.current.value);
+                      }
                       colorRef.current.value = '';
                     }}
                   >
@@ -314,14 +352,24 @@ addColor(colorRef.current.value);
               {state.colors?.map((el) => (
                 <label className="checkbox__color" key={el}>
                   <input type="checkbox" readOnly checked />
-                  <span className='car-edit__container__additional-block__form__group__color' data-value={el} onClick={removeColor}>{el}</span>
+                  <span
+                    className="car-edit__container__additional-block__form__group__color"
+                    data-value={el}
+                    onClick={removeColor}
+                  >
+                    {el}
+                  </span>
                 </label>
               ))}
             </span>
           </div>
           <div className="car-edit__container__additional-block__btn-bar">
             <span>
-              <button className="admin__button blue" onClick={createCar} disabled={procentes !== 100}>
+              <button
+                className="admin__button blue"
+                onClick={createCar}
+                disabled={procentes !== 100}
+              >
                 Сохранить
               </button>
               <button className="admin__button gray" onClick={clearState}>
@@ -335,7 +383,7 @@ addColor(colorRef.current.value);
                 disabled={!carId}
                 onClick={() => {
                   deleteData(`${CARS}/${carId}`);
-                  push('/car-list');
+                  history.push('/car-list');
                 }}
               >
                 Удалить

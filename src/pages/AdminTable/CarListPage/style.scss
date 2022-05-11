@@ -91,6 +91,12 @@
     }
   }
 }
+.error_cars{
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  font-family: $adminFont;
+}
 @media (max-width: 1000px) {
   .car-list-page{
   &__container{

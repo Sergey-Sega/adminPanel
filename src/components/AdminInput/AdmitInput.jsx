@@ -9,11 +9,13 @@ export default function AdminInput({
   errorText,
   isNumber,
   onBlur,
+  list,
 }) {
   return (
     <fieldset className='admin__fieldset'>
       <legend>{legend}</legend>
       <input
+        list={list}
         onChange={onChange}
         type={!isNumber ? 'text' : 'number'}
         min={isNumber && '1'}

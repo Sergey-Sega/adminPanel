@@ -51,7 +51,7 @@ $logo: url('../../assets/Logo.svg');
           background: $blue;
         }
         position: relative;
-        overflow: auto;
+        // overflow: auto;
         z-index: 1;
         grid-area: 2 / 2 / 3 / 3;
         background-color: $backgroundAdmin;

@@ -7,15 +7,19 @@ import { useState } from 'react';
 import { CustomCheckbox } from '../../../components/CustomCheckBox/CustomCheckBox';
 import { AdminPagination } from '../../../components/AdminPagination/AdminPagination';
 import { SelectFilter } from '../../../components/SelectFilter/SelectFilter';
-import { CARS, CITIES, ORDER_STATUS } from '../../../service/urls';
-import { fetchData } from '../../../service/getData';
+import { CARS, CITIES, ORDER, ORDER_STATUS } from '../../../service/urls';
+import { fetchData, putData } from '../../../service/getData';
 import { Loader } from '../../../components/Loader/Loader';
+import { useHistory } from 'react-router-dom';
+import { AdminAlert } from '../../../components/AdminAlert/AdminAlert';
 
 export const Orders = () => {
+  const history = useHistory();
   const [page, setPage] = useState(1);
   const [currentOrder, setCurrentOrder] = useState({});
   const [countPages, setCountPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState(false);
   const [filterList, setFilterList] = useState({
     cities: [],
     cars: [],
@@ -37,7 +41,7 @@ export const Orders = () => {
     getOrderTable();
   }, [page]);
 
-  useEffect(()=>{
+  useEffect(() => {
     createFilters();
   }, []);
 
@@ -54,9 +58,9 @@ export const Orders = () => {
         setCountPages(res.count);
       })
       .catch((err) => {
-        console.error('ERROR', err);
-      }).finally(()=>
-      setIsLoading(false));
+        history.push('/adminPanel/errorpage');
+      })
+      .finally(() => setIsLoading(false));
   }
 
   function filterHandler(event) {
@@ -120,6 +124,24 @@ export const Orders = () => {
       });
   }
 
+  const doneCar = async () => {
+    const body = { ...currentOrder, orderStatusId: filterList.statuses[4] };
+    const putOrder = await putData(`${ORDER}/${currentOrder.id}`, body);
+    if (!putOrder) {
+      history.push('/adminPanel/errorpage');
+    }
+    return putOrder;
+  };
+
+  const cancelCar = async () => {
+    const body = { ...currentOrder, orderStatusId: filterList.statuses[1] };
+    const putOrder = await putData(`${ORDER}/${currentOrder.id}`, body);
+    if (!putOrder) {
+      history.push('/adminPanel/errorpage');
+    }
+    return putOrder;
+  };
+
   function paginationHandler(event) {
     const { name, value } = event.target;
     switch (name) {
@@ -166,6 +188,12 @@ export const Orders = () => {
 
   return (
     <>
+      {alert ? (
+        <AdminAlert
+          text="Успех, заказ сохранен!"
+          closeAction={() => setAlert(false)}
+        />
+      ) : null}
       <h1 className="admin__heading">Заказы</h1>
       <div className="order-block">
         <div className="order-block__sort-container">
@@ -182,10 +210,10 @@ export const Orders = () => {
               />
             ))}
             <button
-              onClick={()=> {
+              onClick={() => {
                 setPage(1);
                 getOrderTable();
-}}
+              }}
               className="admin__button blue"
               type="button"
             >
@@ -193,69 +221,81 @@ export const Orders = () => {
             </button>
           </form>
         </div>
-        {!isLoading &&
-        (<div className="order-block__info">
-          {!shouldShowNoResult ? (
-            <>
-              <span className="order-block__info__part">
-                <img
-                  crossOrigin="anonymous"
-                  referrerPolicy="origin"
-                  className="order-block__info__img"
-                  src={currentOrder.carId?.thumbnail.path || fakeCar}
-                  alt="car"
-                />
-                <p className="order-block__info__text">
-                  <span>{currentOrder.carId?.name || 'МАРКА'}</span> в{' '}
-                  <span>
-                    {currentOrder.cityId?.name || 'Город'}{' '}
-                    {currentOrder.pointId?.address || 'Улица'}
-                  </span>{' '}
-                  <br />
-                  {new Date(currentOrder.dateFrom).toLocaleString('RU') ||
-                    '01.01.2001 01:01'}{' '}
-                  -{' '}
-                  {new Date(currentOrder.dateTo).toLocaleString('RU') ||
-                    '01.01.2001 01:01'}
-                  <br />
-                  Цвет: <span>{currentOrder.color || 'Белый'}</span>
-                </p>
-              </span>
-              <span className="order-block__info__part">
-                <span className="order-block__info__chechboxes">
-                  {options.map((el, i) => (
-                    <Fragment key={i}>
-                      <CustomCheckbox
-                        type="checkbox"
-                        description={el.description}
-                        name={el.name}
-                        checked={currentOrder[el.name]}
-                        readOnly={true}
-                      />
-                      <br />
-                    </Fragment>
-                  ))}
+        {!isLoading && (
+          <div className="order-block__info">
+            {!shouldShowNoResult ? (
+              <>
+                <span className="order-block__info__part">
+                  <img
+                    crossOrigin="anonymous"
+                    referrerPolicy="origin"
+                    className="order-block__info__img"
+                    src={currentOrder.carId?.thumbnail.path || fakeCar}
+                    alt="car"
+                  />
+                  <p className="order-block__info__text">
+                    <span>{currentOrder.carId?.name || 'МАРКА'}</span> в{' '}
+                    <span>
+                      {currentOrder.cityId?.name || 'Город'}{' '}
+                      {currentOrder.pointId?.address || 'Улица'}
+                    </span>{' '}
+                    <br />
+                    {new Date(currentOrder.dateFrom).toLocaleString('RU') ||
+                      '01.01.2001 01:01'}{' '}
+                    -{' '}
+                    {new Date(currentOrder.dateTo).toLocaleString('RU') ||
+                      '01.01.2001 01:01'}
+                    <br />
+                    Цвет: <span>{currentOrder.color || 'Белый'}</span>
+                  </p>
                 </span>
-                <p className="order-block__info__cost">
-                  {currentOrder.price || '00000'} ₽
-                </p>
-                <span className="order-block__info__buttons">
-                  <button className="order-block__info__buttons__ok">
-                    <span>✔</span> Готово
-                  </button>
-                  <button className="order-block__info__buttons__cancel">
-                    <span>✖</span> Отмена
-                  </button>
-                  <button className="order-block__info__buttons__edit">
-                    <span>⁝</span> Изменить
-                  </button>
+                <span className="order-block__info__part">
+                  <span className="order-block__info__chechboxes">
+                    {options.map((el, i) => (
+                      <Fragment key={i}>
+                        <CustomCheckbox
+                          type="checkbox"
+                          description={el.description}
+                          name={el.name}
+                          checked={currentOrder[el.name]}
+                          readOnly={true}
+                        />
+                        <br />
+                      </Fragment>
+                    ))}
+                  </span>
+                  <p className="order-block__info__cost">
+                    {currentOrder.price || '00000'} ₽
+                  </p>
+                  <span className="order-block__info__buttons">
+                    <button
+                      onClick={doneCar}
+                      className="order-block__info__buttons__ok"
+                    >
+                      <span>✔</span> Готово
+                    </button>
+                    <button
+                      onClick={cancelCar}
+                      className="order-block__info__buttons__cancel"
+                    >
+                      <span>✖</span> Отмена
+                    </button>
+                    <button
+                      onClick={() => {
+                        history.push(`/adminPanel/${currentOrder.id}`);
+                      }}
+                      className="order-block__info__buttons__edit"
+                    >
+                      <span>⁝</span> Изменить
+                    </button>
+                  </span>
                 </span>
-              </span>
-            </>
-          ) : (
-            'Заказы не найдены'
-          )}
-        </div>)}
+              </>
+            ) : (
+              'Заказы не найдены'
+            )}
+          </div>
+        )}
         {countPages > 1 && !isLoading && (
           <AdminPagination
             paginationHandler={paginationHandler}
@@ -264,7 +304,7 @@ export const Orders = () => {
             countPages={countPages}
           />
         )}
-        {isLoading && <Loader/>}
+        {isLoading && <Loader />}
       </div>
     </>
   );

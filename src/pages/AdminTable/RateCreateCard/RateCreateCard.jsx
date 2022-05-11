@@ -1,11 +1,13 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AdminAlert } from '../../../components/AdminAlert/AdminAlert';
 import AdminInput from '../../../components/AdminInput/AdmitInput';
 import { createData, fetchData, putData } from '../../../service/getData';
 import { RATE } from '../../../service/urls';
 import './style.scss';
 export const RateCreateCard = () => {
+  const history = useHistory();
   const [rateTypes, setRateTypes] = useState([]);
   const [price, setPrice] = useState(1);
   const [name, setName] = useState('');
@@ -16,10 +18,16 @@ export const RateCreateCard = () => {
   useEffect(() => {
     fetchData('db/rateType')
       .then(({ data }) => setRateTypes(data))
-      .catch((err) => console.error(err));
-      fetchData('db/rate')
+      .catch((err) => {
+        history.push('/adminPanel/errorpage');
+        console.error(err);
+      });
+    fetchData('db/rate')
       .then(({ data }) => setRates(data))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        history.push('/adminPanel/errorpage');
+        console.error(err);
+      });
   }, []);
 
   const inputs = [
@@ -62,8 +70,12 @@ export const RateCreateCard = () => {
   }
 
   const createRate = () => {
-    const rateType=rateTypes.find((el) => el.unit === unit || el.name === name);
-    const rateId=rates.find((el) => el.rateTypeId.unit === unit || el.rateTypeId.name === name)?.id;
+    const rateType = rateTypes.find(
+      (el) => el.unit === unit || el.name === name,
+    );
+    const rateId = rates.find(
+      (el) => el.rateTypeId.unit === unit || el.rateTypeId.name === name,
+    )?.id;
     const body = {
       price: price,
       rateTypeId: {
@@ -71,46 +83,58 @@ export const RateCreateCard = () => {
       },
     };
     if (rateId) {
-      putData(`${RATE}/${rateId}`, body);
-      setAlert(true);
-    setTimeout(() => {
-      setAlert(false);
-    }, 2000);
+      putData(`${RATE}/${rateId}`, body).then((response)=>{
+if (!response) {
+  history.push('/adminPanel/errorpage');
+} else {
+  setAlert(true);
+  setPrice(1), setName(''), setUnit('');
+  setTimeout(() => {
+    setAlert(false);
+  }, 2000);
+}
+      });
     } else if (rateType) {
       createData(RATE, body);
       setAlert(true);
-    setTimeout(() => {
-      setAlert(false);
-    }, 2000);
+      setTimeout(() => {
+        setAlert(false);
+      }, 2000);
     } else {
-     createData(`db/rateType`, {
+      createData(`db/rateType`, {
         unit: unit,
         name: name,
       })
-        .then(({data}) =>
-          createData( RATE, {
+        .then(({ data }) =>
+          createData(RATE, {
             price: price,
             rateTypeId: {
               id: data.id,
             },
           }),
-        );
+        )
+        .catch((err) => {
+          history.push('/adminPanel/errorpage');
+        })
+        .finally(() => {
+          setAlert(true);
+          setTimeout(() => {
+            setAlert(false);
+          }, 2000);
+        });
     }
-    setPrice(1),
-    setName(''),
-    setUnit(''),
-    setAlert(true);
-    setTimeout(() => {
-      setAlert(false);
-    }, 2000);
   };
+
   return (
     <>
-    {alert ? (
-    <AdminAlert text='Успех, тариф сохранен!'
-    closeAction={() => setAlert(false)}/>) : null}
-      <h1 className='admin__heading'>Создание тарифов</h1>
-      <div className='create-rate-block'>
+      {alert ? (
+        <AdminAlert
+          text="Успех, тариф сохранен!"
+          closeAction={() => setAlert(false)}
+        />
+      ) : null}
+      <h1 className="admin__heading">Создание тарифов</h1>
+      <div className="create-rate-block">
         <div>
           {inputs.map((el) => (
             <AdminInput
@@ -124,15 +148,15 @@ export const RateCreateCard = () => {
             />
           ))}
         </div>
-        <div className='create-rate-block__btn-bar'>
+        <div className="create-rate-block__btn-bar">
           <button
             disabled={(!price || !unit || !name) && 'disabled'}
             onClick={createRate}
-            className='admin__button blue'
+            className="admin__button blue"
           >
             Сохранить
           </button>
-          <button className='admin__button gray'>Отменить</button>
+          <button className="admin__button gray">Отменить</button>
         </div>
       </div>
     </>

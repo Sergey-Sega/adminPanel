@@ -1,10 +1,17 @@
 @import '../../../variables.scss';
 .rate-page {
   @include adminBlock;
+  display: flex;
   margin-bottom: 20px;
   min-height: 400px;
   padding: 20px;
   box-sizing: border-box;
+}
+.error_rates {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  font-family: $adminFont;
 }
 @media (max-width: 435px){
   .rate-page{

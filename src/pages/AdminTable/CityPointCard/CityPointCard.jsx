@@ -5,8 +5,11 @@ import CityPointMap from './CityPointMap';
 import { createData, fetchData } from '../../../service/getData';
 import { CITIES, POINTS } from '../../../service/urls';
 import { AdminAlert } from '../../../components/AdminAlert/AdminAlert';
+import { useHistory } from 'react-router-dom';
+
 
 export const CityPointCard = () => {
+  const history = useHistory();
   const [state, setState] = useState({
     pointName: '',
     address: '',
@@ -49,7 +52,9 @@ export const CityPointCard = () => {
           );
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+history.push('/adminPanel/errorpage');
+});
       setAlert(true);
       setTimeout(() => {
         setAlert(false);
@@ -66,7 +71,7 @@ export const CityPointCard = () => {
         <div className="city-point-card__content">
           <h3 className="admin__heading">Укажите точку на карте:</h3>
           <div className="city-point-card__map">
-            <CityPointMap handler={handler} />
+            <CityPointMap history={history} handler={handler} />
           </div>
 
           <div className="city-point-card__content__info">

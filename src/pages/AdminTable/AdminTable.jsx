@@ -7,6 +7,7 @@ import { CityPointCard } from './CityPointCard/CityPointCard';
 import { ErrorPage } from './ErrorPage/ErrorPage';
 import { Footer } from './Footer/Footer';
 import { Header } from './Header/Header';
+import { OrderEditCard } from './OrderEditCard/OrderEditCard';
 import { Orders } from './Orders/Orders';
 import { PointsPage } from './PointsPage/PointsPage';
 import { RateCreateCard } from './RateCreateCard/RateCreateCard';
@@ -46,6 +47,8 @@ export const AdminTable = () => {
                   component={CarEditCard}/>
                   <Route exact path='/adminPanel/errorpage'
                   component={ErrorPage}/>
+                  <Route exact path='/adminPanel/:orderId'
+                  component={OrderEditCard}/>
                 </Switch>
                 </div>
               <div className='admin-panel__container__bottombar'>

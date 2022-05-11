@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 export const SidebarLink = ({ title, url, icon, onClick }) => {
   const [currentPath, setcurrentPath] = useState('');
   const location = useLocation();
+
   useEffect(() => {
     setcurrentPath(location.pathname);
   }, [location]);

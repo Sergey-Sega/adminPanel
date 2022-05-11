@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AdminList } from '../../../components/AdminList/AdminList';
 import { Loader } from '../../../components/Loader/Loader';
 import { fetchData } from '../../../service/getData';
@@ -8,6 +9,7 @@ import { CITIES } from '../../../service/urls';
 import './style.scss';
 
 export const PointsPage = () => {
+  const history = useHistory();
   const [pointsData, setPointsData] = useState('');
   const [cityList, setCityList] = useState('');
   const [city, setCity] = useState('');
@@ -42,7 +44,9 @@ export const PointsPage = () => {
         );
       })
       .then(() => fetchData(CITIES).then(({ data }) => setCityList(data)))
-      .catch((err) => console.error('ERROR', err)).finally(()=> {
+      .catch((err) => {
+history.push('/adminPanel/errorpage');
+}).finally(()=> {
 setIsLoading(false);
 });
 };
