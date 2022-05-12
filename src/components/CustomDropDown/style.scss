@@ -1,0 +1,117 @@
+@import '../../variables.scss';
+.label-for-text-input {
+  color: $mainBlack;
+  font-weight: 300;
+  font-size: 14px;
+  position: relative;
+  white-space: pre;
+}
+.textInput {
+  // box-sizing: border-box;
+  min-width: 230px;
+  color: $mainBlack;
+  font-weight: 300;
+  border: none;
+  border-bottom: $grayLight solid 2px;
+  outline: none;
+  padding: 0px 4px;
+  // margin: 0px 16px;
+}
+
+.dropdown-wrap 
+{
+  width: 230px;
+  position: relative;
+  // padding-left: 140px;
+}
+
+.dropdown{
+  width: 100%;
+  max-height: 145px;
+  overflow-y: auto;
+  width: 334px;
+  position: absolute;
+  z-index: 2;
+  border-bottom: $grayLight solid 2px;
+  background-color: white;
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  &.open{
+  display: block;
+  }
+  &.closed{
+    display: none;
+  }
+}
+.textInput__dropdown{ 
+  font-family: $adminFont;
+  min-width: 320px;
+  height: 29px;
+  border-radius: 3px;
+  outline: none;
+  border: solid 1px #E1E5EB;
+  font-size: 14px;
+  line-height: 13px;
+  color: #121212;
+  padding-left: 11px;
+}
+.dropdown-item
+{
+  padding: 6px 10px;
+  font-size: 14px;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+}
+
+.dropdown-item:hover 
+{
+  color: $blue;
+}
+::-webkit-scrollbar {
+  width: 2px; /* ширина для вертикального скролла */
+  background-color: white;
+  border:1px solid #EEEEEE;
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+  background-color: $grayDark;
+  border-radius: 9em;
+}
+.dropdown_destination{
+  width: 100%;
+  max-height: 145px;
+  overflow-y: auto;
+  width: 240px;
+  position: absolute;
+  top: 22px;
+  z-index: 1;
+  border-bottom: $grayLight solid 2px;
+  background-color: black;
+  
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: none;
+}
+
+@media (max-width: 888px){
+    .textInput__dropdown {
+    min-width: 200px;
+    width: 100%;
+}
+.dropdown-wrap 
+{
+  position: relative;
+  min-width: 200px;
+    width: 100%;
+}
+.dropdown{
+    min-width: 200px;
+    width: 100%;
+}
+}

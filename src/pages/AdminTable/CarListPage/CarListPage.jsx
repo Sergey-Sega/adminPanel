@@ -49,7 +49,7 @@ history.push('/adminPanel/errorpage');
       });
   };
 
-  const shouldShowNoResult = !Object.values(myCars ?? {}).length;
+  const shouldShowNoResult = !Object.values(myCars ?? {}).length && !Object.values(filterCar).length;
 
   const fetchCar = () => {
     const { carId } = filter;
@@ -110,6 +110,7 @@ history.push('/adminPanel/errorpage');
           <form className="order-block__sort-container__sort">
             {selectList.map(({ name, options, defaultOption }) => (
               <SelectFilter
+              disabled={filterList.cars.length ? false : true}
                 name={name}
                 options={options}
                 className="admin__select"
@@ -123,6 +124,9 @@ history.push('/adminPanel/errorpage');
                 setPage(1);
                 getCarsTable();
                 fetchCar();
+                if (Object.values(filterCar).length) {
+                  setFilterCar({});
+                }
               }}
               className="admin__button blue"
               type="button"
@@ -140,9 +144,9 @@ history.push('/adminPanel/errorpage');
                 <CarListCard el={el} />
               </React.Fragment>
             ))
-          ) : <>
+          ) : (<>
           <h1 className="error_rates">Нет доступных машин</h1>
-        </>
+        </>)
           )}
           {Object.values(filterCar).length ? (
             <CarListCard el={filterCar} />

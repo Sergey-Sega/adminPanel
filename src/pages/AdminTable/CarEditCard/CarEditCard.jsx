@@ -1,22 +1,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './style.scss';
 import fakeCar from '../../../assets/car.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCar, setCarEdit } from '../../../store/actions/carEditActions';
 import { useParams } from 'react-router-dom';
-import {
-  createData,
-  deleteData,
-  fetchData,
-  putData,
-} from '../../../service/getData';
+import { createData, deleteData, fetchData, putData } from '../../../service/getData';
 import AdminInput from '../../../components/AdminInput/AdmitInput';
 import { CARS, CATEGORIES } from '../../../service/urls';
 import { convertBase64 } from '../../../hooks/imageHook';
 import { AdminAlert } from '../../../components/AdminAlert/AdminAlert';
 import { useLocation, useHistory } from 'react-router-dom';
+import { CustomDropDown } from '../../../components/CustomDropDown/CustomDropDown';
 
 const initialState = {
   priceMax: 50000,
@@ -50,6 +46,10 @@ export const CarEditCard = () => {
   const colorRef = useRef();
   const [error, setError] = useState(false);
   const [state, setState] = useState(initialState);
+
+  const avtoTypeOptions = useMemo(()=>{
+  return category.map(({id, name})=> ({value: id, title: name}) );
+}, [category]);
 
   const dispatch = useDispatch();
 
@@ -180,19 +180,6 @@ export const CarEditCard = () => {
     });
   };
 
-  const setCategoryId = () => {
-    const categoryId = category.find((el) => state.categoryId.name === el.name)
-      ?.id;
-    const description = category.find((el) => state.categoryId.name === el.name)
-      ?.description;
-    if (categoryId) {
-      setState((prevState) => ({
-        ...prevState,
-        categoryId: { ...prevState.categoryId, id: categoryId, description },
-      }));
-    }
-  };
-
   return (
     <>
       {alert ? (
@@ -273,33 +260,21 @@ export const CarEditCard = () => {
                 value={state.name ?? ''}
                 name="name"
               />
-              <AdminInput
-                placeholder="Введите тип автомобиля"
-                legend="Тип автомобиля *"
-                list="type"
-                onBlur={setCategoryId}
-                error={error}
-                errorText="Некорректный тип автомобиля, выберите из существующих"
-                onChange={(e) =>
-                  setState({
-                    ...state,
-                    categoryId: { ...state.categoryId, name: e.target.value },
-                  })
-                }
-                value={state.categoryId?.name ?? ''}
-                name="type"
+              <CustomDropDown
+                defaultValue={state.categoryId?.id ?? ''}
+                placeholder="Выберите тип автомобиля"
+                legend="Тип автомобиля (Выберите из списка)*"
+                options={avtoTypeOptions}
+                onChange={(value) => {
+                  const categoryId = category.find(({id}) => id === value);
+                  if (categoryId) {
+                    setState({
+                      ...state,
+                      categoryId,
+                    });
+                  }
+                }}
               />
-              <datalist id="type">
-                {category
-                  ? category.map((el) => {
-                      return (
-                        <option key={el.id} value={el.name} id={el.id}>
-                          {el.name}
-                        </option>
-                      );
-                    })
-                  : null}
-              </datalist>
             </span>
             <span className="car-edit__container__additional-block__form__group">
               <div className="car-edit__container__additional-block__form__group__price">

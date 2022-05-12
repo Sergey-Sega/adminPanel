@@ -3,25 +3,21 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AdminAlert } from '../../../components/AdminAlert/AdminAlert';
 import AdminInput from '../../../components/AdminInput/AdmitInput';
-import { createData, fetchData, putData } from '../../../service/getData';
+import { Warning } from '../../../components/Warning/Warning';
+import { createData, fetchData } from '../../../service/getData';
 import { RATE } from '../../../service/urls';
 import './style.scss';
 export const RateCreateCard = () => {
   const history = useHistory();
-  const [rateTypes, setRateTypes] = useState([]);
+
   const [price, setPrice] = useState(1);
   const [name, setName] = useState('');
   const [unit, setUnit] = useState('');
   const [rates, setRates] = useState([]);
   const [alert, setAlert] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   useEffect(() => {
-    fetchData('db/rateType')
-      .then(({ data }) => setRateTypes(data))
-      .catch((err) => {
-        history.push('/adminPanel/errorpage');
-        console.error(err);
-      });
     fetchData('db/rate')
       .then(({ data }) => setRates(data))
       .catch((err) => {
@@ -70,37 +66,12 @@ export const RateCreateCard = () => {
   }
 
   const createRate = () => {
-    const rateType = rateTypes.find(
-      (el) => el.unit === unit || el.name === name,
-    );
     const rateId = rates.find(
-      (el) => el.rateTypeId.unit === unit || el.rateTypeId.name === name,
+      (el) => el.rateTypeId.unit === unit & el.rateTypeId.name === name,
     )?.id;
-    const body = {
-      price: price,
-      rateTypeId: {
-        id: rateType?.id,
-      },
-    };
     if (rateId) {
-      putData(`${RATE}/${rateId}`, body).then((response)=>{
-if (!response) {
-  history.push('/adminPanel/errorpage');
-} else {
-  setAlert(true);
-  setPrice(1), setName(''), setUnit('');
-  setTimeout(() => {
-    setAlert(false);
-  }, 2000);
-}
-      });
-    } else if (rateType) {
-      createData(RATE, body);
-      setAlert(true);
-      setTimeout(() => {
-        setAlert(false);
-      }, 2000);
-    } else {
+      setWarning(true);
+  } else {
       createData(`db/rateType`, {
         unit: unit,
         name: name,
@@ -117,6 +88,9 @@ if (!response) {
           history.push('/adminPanel/errorpage');
         })
         .finally(() => {
+          setPrice(1);
+          setUnit('');
+          setName('');
           setAlert(true);
           setTimeout(() => {
             setAlert(false);
@@ -131,6 +105,12 @@ if (!response) {
         <AdminAlert
           text="Успех, тариф сохранен!"
           closeAction={() => setAlert(false)}
+        />
+      ) : null}
+      {warning ? (
+        <Warning
+        warningText='Такой тариф уже существует!'
+        closeAction={() => setWarning(false)}
         />
       ) : null}
       <h1 className="admin__heading">Создание тарифов</h1>

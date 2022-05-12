@@ -1,0 +1,42 @@
+
+@import '../../variables.scss';
+
+.warning {
+    z-index: 100;
+    position: fixed;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffffd9;
+    transform: scale(0);
+    &.active{
+      transform: scale(1);
+    }
+    &__btns-block {
+        padding-left: 110px;
+      &__head {
+        font-family: $adminFont;
+        font-weight: normal;
+        font-size: 24px;
+        color: $mainBlack;
+        text-align: center;
+      }
+      span {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  @media (max-width: $smart) {
+    .warning__btns-block{
+        padding-left: 50px;
+    &__head {
+        width: 300px;
+    }
+  }
+}

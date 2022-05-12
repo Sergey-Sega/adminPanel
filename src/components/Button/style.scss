@@ -1,0 +1,51 @@
+@import '../../variables.scss';
+
+.button {
+  min-height: 32px;
+  font-family: $adminFont;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  background: linear-gradient(90deg, $mainAccent 2.61%, #039F67 112.6%);
+  background-blend-mode: darken;
+  cursor: pointer;
+}
+.warn-btn {
+  height: 48px;
+  width: 177px;
+  margin: 8px;
+}
+.blue-btn {
+  background: $blue;
+  width: 164px;
+  &:active {
+    background: linear-gradient(
+      to right,
+      darken(#7b0c3b, 30),
+      darken(#7b0c3b, 40)
+    );
+  }
+  &:disabled {
+    background: $grayLight;
+    color: #fff;
+  }
+}
+.big-btn {
+  width: 250px;
+  height: 48px;
+}
+.total-btn{
+  width: 287px;
+  height: 48px;
+  margin-top: 32px;
+}
+@media (max-width: $smart) {
+  .button {
+    width: 50%;
+    border-radius: 0%;
+  }
+}

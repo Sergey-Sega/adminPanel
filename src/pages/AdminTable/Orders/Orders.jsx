@@ -12,6 +12,7 @@ import { fetchData, putData } from '../../../service/getData';
 import { Loader } from '../../../components/Loader/Loader';
 import { useHistory } from 'react-router-dom';
 import { AdminAlert } from '../../../components/AdminAlert/AdminAlert';
+import { Warning } from '../../../components/Warning/Warning';
 
 export const Orders = () => {
   const history = useHistory();
@@ -20,6 +21,7 @@ export const Orders = () => {
   const [countPages, setCountPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState(false);
+  const [warning, setWarning] = useState(false);
   const [filterList, setFilterList] = useState({
     cities: [],
     cars: [],
@@ -127,8 +129,13 @@ export const Orders = () => {
   const doneCar = async () => {
     const body = { ...currentOrder, orderStatusId: filterList.statuses[4] };
     const putOrder = await putData(`${ORDER}/${currentOrder.id}`, body);
-    if (!putOrder) {
-      history.push('/adminPanel/errorpage');
+     if (!putOrder) {
+        setWarning(true);
+    } else {
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 1500);
     }
     return putOrder;
   };
@@ -137,9 +144,23 @@ export const Orders = () => {
     const body = { ...currentOrder, orderStatusId: filterList.statuses[1] };
     const putOrder = await putData(`${ORDER}/${currentOrder.id}`, body);
     if (!putOrder) {
-      history.push('/adminPanel/errorpage');
+      setWarning(true);
+    } else {
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 1500);
     }
     return putOrder;
+  };
+
+  const editOrder = async () => {
+    const putOrder = await putData(`${ORDER}/${currentOrder.id}`, currentOrder);
+    if (!putOrder) {
+      setWarning(true);
+    } else {
+      history.push(`/adminPanel/${currentOrder.id}`);
+    }
   };
 
   function paginationHandler(event) {
@@ -185,13 +206,18 @@ export const Orders = () => {
     },
   ];
   const shouldShowNoResult = !Object.values(currentOrder ?? {}).length;
-
   return (
     <>
       {alert ? (
         <AdminAlert
           text="Успех, заказ сохранен!"
           closeAction={() => setAlert(false)}
+        />
+      ) : null}
+      {warning ? (
+        <Warning
+        warningText='Редактирование заказа невозможно, недостаточно данных!'
+        closeAction={() => setWarning(false)}
         />
       ) : null}
       <h1 className="admin__heading">Заказы</h1>
@@ -201,6 +227,7 @@ export const Orders = () => {
           <form className="order-block__sort-container__sort">
             {selectList.map(({ name, options, defaultOption }) => (
               <SelectFilter
+                disabled={filterList.cars.length ? false : true}
                 name={name}
                 options={options}
                 className="admin__select"
@@ -281,9 +308,7 @@ export const Orders = () => {
                       <span>✖</span> Отмена
                     </button>
                     <button
-                      onClick={() => {
-                        history.push(`/adminPanel/${currentOrder.id}`);
-                      }}
+                      onClick={editOrder}
                       className="order-block__info__buttons__edit"
                     >
                       <span>⁝</span> Изменить

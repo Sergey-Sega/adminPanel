@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import React, {
-  Fragment,
   useCallback,
   useEffect,
-  useRef,
+  useMemo,
   useState,
 } from 'react';
 import './style.scss';
@@ -15,20 +14,19 @@ import AdminInput from '../../../components/AdminInput/AdmitInput';
 import { ORDER, ORDER_STATUS } from '../../../service/urls';
 import { AdminAlert } from '../../../components/AdminAlert/AdminAlert';
 import { useHistory } from 'react-router-dom';
-import { CustomCheckbox } from '../../../components/CustomCheckBox/CustomCheckBox';
+import { CustomDropDown } from '../../../components/CustomDropDown/CustomDropDown';
 
 export const OrderEditCard = () => {
   const history = useHistory();
   const [error, setError] = useState(false);
   const { orderId } = useParams();
   const [alert, setAlert] = useState(false);
-  const [order, setOrder] = useState([]);
+  const [order, setOrder] = useState({});
   const [orderStatuses, setOrderStatuses] = useState([]);
-  const options = [
-    { name: 'isFullTank', description: 'Полный бак' },
-    { name: 'isNeedChildChair', description: 'Детское кресло' },
-    { name: 'isRightWheel', description: 'Правый руль' },
-  ];
+
+  const orderStatusOptions = useMemo(()=>{
+    return orderStatuses.map(({id, name})=> ({value: id, title: name}) );
+  }, [orderStatuses]);
 
   useEffect(async () => {
     const res = await fetchData(`${ORDER}/${orderId}`).then((response) => {
@@ -71,59 +69,11 @@ export const OrderEditCard = () => {
     });
   };
 
-  const setOptions = (value) => {
-    const index = options.find((elem) => elem.name === value);
-
-    if (index != 1) {
-      options.splice(index, 1);
-    } else {
-      order.push(value);
-    }
-
-    if (order.isFullTank) {
-      setOrder({ ...order, isFullTank: false });
-    }
-    if (order.isNeedChildChair) {
-      setOrder({ ...order, isNeedChildChair: false });
-    }
-    if (order.isRightWheel) {
-      setOrder({ ...order, isRightWheel: false });
-    }
-    if (!order.isFullTank) {
-      setOrder({ ...order, isFullTank: true });
-    }
-    if (!order.isNeedChildChair) {
-      setOrder({ ...order, isNeedChildChair: true });
-    }
-    if (!order.isRightWheel) {
-      setOrder({ ...order, isRightWheel: true });
-    }
-  };
-
-  const setOrderStatusId = () => {
-    const orderStatusId = orderStatuses.find(
-      (el) => order.orderStatusId.name === el.name,
-    )?.id;
-    const nameOrder = orderStatuses.find(
-      (el) => order.orderStatusId.name === el.name,
-    )?.name;
-    if (orderStatusId) {
-      setOrder((prevState) => ({
-        ...prevState,
-        orderStatusId: {
-          ...prevState.orderStatusId,
-          id: orderStatusId,
-          nameOrder,
-        },
-      }));
-    }
-  };
-
   return (
     <>
       {alert ? (
         <AdminAlert
-          text="Успех, машина сохранена!"
+          text="Успех, карточка заказа сохранена!"
           closeAction={() => setAlert(false)}
         />
       ) : null}
@@ -138,19 +88,20 @@ export const OrderEditCard = () => {
             alt="car"
           />
           <h2>{order.carId?.name || 'Название автомобиля'}</h2>
-          <h3>{order.carId?.categoryId.name || 'Тип автомобиля'}</h3>
+          <h3>{order.carId?.categoryId?.name || 'Тип автомобиля'}</h3>
           <div className="car-edit__container__car-block__description">
             <p className="car-edit__container__car-block__description__text">
               Описание
             </p>
             <textarea
+             disabled
               className="admin__textarea"
               name="description"
               cols="30"
               rows="5"
               maxLength="196"
               placeholder="Введите описание автомобиля"
-              value={order.carId?.description}
+              value={order.carId?.description ?? ''}
               onChange={(e) =>
                 setOrder({
                   ...order,
@@ -165,62 +116,27 @@ export const OrderEditCard = () => {
             <h2>Настройки заказа</h2>
             <span className="car-edit__container__additional-block__form__group">
               <AdminInput
+              disabled
                 placeholder="Кол-во бензина в баке в %"
                 legend="Бензина в баке в %"
-                onChange={(e) =>
-                  setOrder({
-                    ...order,
-                    carId: { ...order.carId, tank: e.target.value },
-                  })
-                }
-                errorText="Некорректная модель автомобиля"
                 value={order.carId?.tank ?? ''}
                 name="name"
               />
-              <AdminInput
-                legend="Статус заказа"
-                error={error}
-                onBlur={setOrderStatusId}
-                errorText="Некорректный статус, выберите из существующих"
-                onChange={(e) =>
-                  setOrder({
-                    ...order,
-                    orderStatusId: {
-                      ...order.orderStatusId,
-                      name: e.target.value,
-                    },
-                  })
-                }
-                value={order.orderStatusId?.name ?? ''}
-                name="name"
-                list="type"
+               <CustomDropDown
+                defaultValue={order.orderStatusId?.name}
+                placeholder="Выберите статус заказа"
+                legend="Статус заказа (Выберите из списка)*"
+                options={orderStatusOptions}
+                onChange={(value) => {
+                  const orderStatusId = orderStatuses.find(({id}) => id === value);
+                  if (orderStatusId) {
+                    setOrder({
+                      ...order,
+                      orderStatusId,
+                    });
+                  }
+                }}
               />
-              <datalist id="type">
-                {orderStatuses
-                  ? orderStatuses.map((el) => {
-                      return (
-                        <option key={el.id} value={el.name} id={el.id}>
-                          {el.name}
-                        </option>
-                      );
-                    })
-                  : null}
-              </datalist>
-            </span>
-            <span className="order-edit__info__chechboxes">
-              {options.map((el, i) => (
-                <Fragment key={i}>
-                  <CustomCheckbox
-                    type="checkbox"
-                    description={el.description}
-                    name={el.name}
-                    action={(e) => setOptions(e.target.value)}
-                    checked={order[el.name]}
-                    readOnly={true}
-                  />
-                  <br />
-                </Fragment>
-              ))}
             </span>
             <span className="car-edit__container__additional-block__form__group">
               <div className="car-edit__container__additional-block__form__group__price">
@@ -233,14 +149,9 @@ export const OrderEditCard = () => {
                 />
               </div>
               <AdminInput
+               disabled
                 placeholder="Введите номер автомобиля"
                 legend="Номер автомобиля"
-                onChange={(e) =>
-                  setOrder({
-                    ...order,
-                    carId: { ...order.carId, number: e.target.value },
-                  })
-                }
                 value={order.carId?.number ?? ''}
                 name="number"
               />
