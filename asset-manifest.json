@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/adminPanel/static/css/main.3ec6e050.css",
-    "main.js": "/adminPanel/static/js/main.2e69b2d0.js",
+    "main.css": "/adminPanel/static/css/main.dec8f274.css",
+    "main.js": "/adminPanel/static/js/main.42abc8b8.js",
     "static/media/Roboto-Medium.ttf": "/adminPanel/static/media/Roboto-Medium.13a29228654d5c5ec9c4.ttf",
     "static/media/Roboto-Regular.ttf": "/adminPanel/static/media/Roboto-Regular.03523cf578d69fa92322.ttf",
     "static/media/Roboto-Bold.ttf": "/adminPanel/static/media/Roboto-Bold.4f39c5796e60c9d8e732.ttf",
@@ -22,11 +22,11 @@
     "static/media/Error.svg": "/adminPanel/static/media/Error.9ae656e3678d67bca3ec.svg",
     "static/media/CarList.svg": "/adminPanel/static/media/CarList.738fc3f8ee3853ab7434.svg",
     "static/media/Orders.svg": "/adminPanel/static/media/Orders.f2c1be7b09e938c0cdee.svg",
-    "main.3ec6e050.css.map": "/adminPanel/static/css/main.3ec6e050.css.map",
-    "main.2e69b2d0.js.map": "/adminPanel/static/js/main.2e69b2d0.js.map"
+    "main.dec8f274.css.map": "/adminPanel/static/css/main.dec8f274.css.map",
+    "main.42abc8b8.js.map": "/adminPanel/static/js/main.42abc8b8.js.map"
   },
   "entrypoints": [
-    "static/css/main.3ec6e050.css",
-    "static/js/main.2e69b2d0.js"
+    "static/css/main.dec8f274.css",
+    "static/js/main.42abc8b8.js"
   ]
 }
