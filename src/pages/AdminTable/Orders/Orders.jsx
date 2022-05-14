@@ -49,7 +49,6 @@ export const Orders = () => {
 
   function getOrderTable() {
     const { carId, date, cityId, status } = filter;
-    setIsLoading(true);
     fetchData(
       `db/order?page=${page - 1}&limit=1&createdAt[$gt]=${date}${
         carId && '&carId=' + carId
@@ -61,8 +60,7 @@ export const Orders = () => {
       })
       .catch((err) => {
         history.push('/adminPanel/errorpage');
-      })
-      .finally(() => setIsLoading(false));
+      });
   }
 
   function filterHandler(event) {
@@ -98,6 +96,7 @@ export const Orders = () => {
   }
 
   function createFilters() {
+    setIsLoading(true);
     let cars;
     let cities;
     let statuses;
@@ -108,7 +107,8 @@ export const Orders = () => {
       .then(() => {
         fetchData(CARS)
           .then(({ data }) => {
-            cars = data;
+            cars = data,
+            setIsLoading(false);
           })
           .then(() => {
             fetchData(ORDER_STATUS)
