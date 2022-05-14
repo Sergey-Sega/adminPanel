@@ -261,7 +261,7 @@ export const CarEditCard = () => {
                 name="name"
               />
               <CustomDropDown
-                defaultValue={state.categoryId?.id ?? ''}
+                defaultValue={state.categoryId?.name ?? ''}
                 placeholder="Выберите тип автомобиля"
                 legend="Тип автомобиля (Выберите из списка)*"
                 options={avtoTypeOptions}

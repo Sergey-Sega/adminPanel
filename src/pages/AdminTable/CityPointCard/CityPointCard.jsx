@@ -24,7 +24,7 @@ export const CityPointCard = () => {
   );
 
   const handler = (info) => {
-    setState({ address: info });
+    setState({ ...state, address: info });
   };
 
   const createPoint = () => {
@@ -49,16 +49,16 @@ export const CityPointCard = () => {
               cityId: data,
               address: state.address.name,
             }),
+            setAlert(true),
+            setTimeout(() => {
+              setAlert(false);
+            }, 2000),
           );
         }
       })
       .catch((err) => {
 history.push('/adminPanel/errorpage');
 });
-      setAlert(true);
-      setTimeout(() => {
-        setAlert(false);
-      }, 2000);
   };
 
   return (
@@ -82,6 +82,7 @@ history.push('/adminPanel/errorpage');
               <legend>Введите название новой точки выдачи</legend>
               <input
                 onChange={handleChange('pointName')}
+                value={state.pointName ?? ''}
                 className="admin__input"
                 type="text"
                 name="pointName"
@@ -124,10 +125,10 @@ history.push('/adminPanel/errorpage');
               </p>
             )}
             <div className="city-point-card__content__info__btn-bar">
-              <button className="admin__button blue" onClick={createPoint}>
+              <button className="admin__button blue" disabled={!state.address || !state.pointName} onClick={createPoint}>
                 Сохранить
               </button>
-              <button className="admin__button red">Отменить</button>
+              <button onClick={()=> setState({})} className="admin__button red">Отменить</button>
             </div>
           </div>
         </div>

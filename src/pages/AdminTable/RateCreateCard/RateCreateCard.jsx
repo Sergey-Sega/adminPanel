@@ -136,7 +136,9 @@ export const RateCreateCard = () => {
           >
             Сохранить
           </button>
-          <button className="admin__button gray">Отменить</button>
+          <button
+          onClick={()=> history.push('/rate-list')}
+           className="admin__button gray">Отменить</button>
         </div>
       </div>
     </>

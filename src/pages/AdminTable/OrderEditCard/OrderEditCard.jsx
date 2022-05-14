@@ -11,7 +11,7 @@ import fakeCar from '../../../assets/car.png';
 import { useParams } from 'react-router-dom';
 import { deleteData, fetchData, putData } from '../../../service/getData';
 import AdminInput from '../../../components/AdminInput/AdmitInput';
-import { ORDER, ORDER_STATUS } from '../../../service/urls';
+import { CITIES, ORDER, ORDER_STATUS, POINTS } from '../../../service/urls';
 import { AdminAlert } from '../../../components/AdminAlert/AdminAlert';
 import { useHistory } from 'react-router-dom';
 import { CustomDropDown } from '../../../components/CustomDropDown/CustomDropDown';
@@ -23,10 +23,21 @@ export const OrderEditCard = () => {
   const [alert, setAlert] = useState(false);
   const [order, setOrder] = useState({});
   const [orderStatuses, setOrderStatuses] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [points, setPoints] = useState([]);
+  const [filterPoints, setFilterPoints] = useState([]);
 
   const orderStatusOptions = useMemo(()=>{
     return orderStatuses.map(({id, name})=> ({value: id, title: name}) );
   }, [orderStatuses]);
+
+  const citiesOptions = useMemo(()=>{
+    return cities.map(({id, name})=> ({value: id, title: name}) );
+  }, [cities]);
+
+  const pointsOptions = useMemo(()=>{
+    return filterPoints.map(({id, name})=> ({value: id, title: name}) );
+  }, [filterPoints]);
 
   useEffect(async () => {
     const res = await fetchData(`${ORDER}/${orderId}`).then((response) => {
@@ -37,6 +48,15 @@ export const OrderEditCard = () => {
         setOrder(response.data);
       }
     });
+    const response = await fetchData(CITIES);
+    const data = response.data;
+    setCities(response.data);
+  }, []);
+
+  useEffect(async ()=>{
+    const res = await fetchData(POINTS);
+    const data = res.data;
+    setPoints(data);
   }, []);
 
   useEffect(async () => {
@@ -55,8 +75,6 @@ export const OrderEditCard = () => {
     const showError = orderStatuses.every(
       (el) => el.name !== order.orderStatusId?.name,
     );
-    setError(showError);
-    if (showError) throw new Error('Скорректируйте карточку заказа');
     putData(`${ORDER}/${orderId}`, order).then((response) => {
       if (!response) {
         history.push('/adminPanel/errorpage');
@@ -100,7 +118,7 @@ export const OrderEditCard = () => {
               cols="30"
               rows="5"
               maxLength="196"
-              placeholder="Введите описание автомобиля"
+              placeholder="Описание автомобиля"
               value={order.carId?.description ?? ''}
               onChange={(e) =>
                 setOrder({
@@ -115,12 +133,44 @@ export const OrderEditCard = () => {
           <div className="car-edit__container__additional-block__form">
             <h2>Настройки заказа</h2>
             <span className="car-edit__container__additional-block__form__group">
-              <AdminInput
-              disabled
-                placeholder="Кол-во бензина в баке в %"
-                legend="Бензина в баке в %"
-                value={order.carId?.tank ?? ''}
-                name="name"
+            <CustomDropDown
+                defaultValue={order.cityId?.name}
+                placeholder="Выберите город"
+                legend="Город (Выберите из списка)*"
+                options={citiesOptions}
+                onChange={(value) => {
+                  setFilterPoints([]);
+                  setError(false);
+                  const orderCityId = cities.find(({id}) => id === value);
+                  if (orderCityId) {
+                    setOrder({
+                      ...order,
+                      cityId: orderCityId,
+                      pointId: undefined,
+                    });
+                    const result = points.filter(({cityId}) => cityId.id === orderCityId.id);
+                    setFilterPoints(result);
+                    if (!result.length) setError(true);
+                  }
+                }
+              }
+              />
+              <CustomDropDown
+                defaultValue={order.pointId?.name}
+                placeholder="Выберите пункт выдачи"
+                legend="Пункт (Выберите из списка)*"
+                error={error}
+                errorText='Нет доступных пунктов выдачи!!!'
+                options={pointsOptions}
+                onChange={(value) => {
+                  const pointId = filterPoints.find(({id}) => id === value);
+                  if (pointId) {
+                    setOrder({
+                      ...order,
+                      pointId,
+                    });
+                  }
+                }}
               />
                <CustomDropDown
                 defaultValue={order.orderStatusId?.name}
@@ -135,7 +185,8 @@ export const OrderEditCard = () => {
                       orderStatusId,
                     });
                   }
-                }}
+                }
+              }
               />
             </span>
             <span className="car-edit__container__additional-block__form__group">
@@ -148,18 +199,11 @@ export const OrderEditCard = () => {
                   name="price"
                 />
               </div>
-              <AdminInput
-               disabled
-                placeholder="Введите номер автомобиля"
-                legend="Номер автомобиля"
-                value={order.carId?.number ?? ''}
-                name="number"
-              />
             </span>
           </div>
           <div className="car-edit__container__additional-block__btn-bar">
             <span>
-              <button onClick={editOrder} className="admin__button blue">
+              <button onClick={editOrder} disabled={!order.cityId || !order.pointId || !order.orderStatusId} className="admin__button blue">
                 Сохранить
               </button>
             </span>

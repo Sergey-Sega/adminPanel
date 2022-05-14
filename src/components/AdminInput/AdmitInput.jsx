@@ -27,7 +27,7 @@ export default function AdminInput({
         placeholder={placeholder}
         onBlur={onBlur}
       />
-      {error && <p className='admin__input__error-text'>{errorText}</p>}{' '}
+      {error && <p className='admin__input__error-text'>{errorText}</p>}
     </fieldset>
   );
 };

@@ -154,15 +154,6 @@ export const Orders = () => {
     return putOrder;
   };
 
-  const editOrder = async () => {
-    const putOrder = await putData(`${ORDER}/${currentOrder.id}`, currentOrder);
-    if (!putOrder) {
-      setWarning(true);
-    } else {
-      history.push(`/adminPanel/${currentOrder.id}`);
-    }
-  };
-
   function paginationHandler(event) {
     const { name, value } = event.target;
     switch (name) {
@@ -308,7 +299,7 @@ export const Orders = () => {
                       <span>✖</span> Отмена
                     </button>
                     <button
-                      onClick={editOrder}
+                      onClick={()=> history.push(`/adminPanel/${currentOrder.id}`)}
                       className="order-block__info__buttons__edit"
                     >
                       <span>⁝</span> Изменить
