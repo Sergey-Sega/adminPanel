@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import CarEditCard from './CarEditCard/CarEditCard';
-import CarListPage from './CarListPage/CarListPage';
-import CityPointCard from './CityPointCard/CityPointCard';
+import { AdminWelcome } from './AdminWelcome/AdminWelcome';
+import { CarEditCard } from './CarEditCard/CarEditCard';
+import { CarListPage } from './CarListPage/CarListPage';
+import { CityPointCard } from './CityPointCard/CityPointCard';
 import { ErrorPage } from './ErrorPage/ErrorPage';
 import { Footer } from './Footer/Footer';
 import { Header } from './Header/Header';
+import { OrderEditCard } from './OrderEditCard/OrderEditCard';
 import { Orders } from './Orders/Orders';
 import { PointsPage } from './PointsPage/PointsPage';
 import { RateCreateCard } from './RateCreateCard/RateCreateCard';
@@ -28,6 +30,7 @@ export const AdminTable = () => {
               </div>
               <div className='admin-panel__container__content'>
                  <Switch>
+                   <Route exact path='/' component={AdminWelcome}/>
                   <Route exact path='/adminPanel/orders' component={Orders}/>
                   <Route exact path='/points-list' component={PointsPage} />
                   <Route exact path='/rate-list' component={RatePageList} />
@@ -37,10 +40,15 @@ export const AdminTable = () => {
                   <Route exact path='/adminPanel/point-edit-card'
                   component={CityPointCard}/>
                   <Route
+                  exact path="/adminPanel/car-edit-card/:carId"
+                  component={CarEditCard}/>
+                  <Route
                   exact path="/adminPanel/car-edit-card"
                   component={CarEditCard}/>
                   <Route exact path='/adminPanel/errorpage'
                   component={ErrorPage}/>
+                  <Route exact path='/adminPanel/:orderId'
+                  component={OrderEditCard}/>
                 </Switch>
                 </div>
               <div className='admin-panel__container__bottombar'>

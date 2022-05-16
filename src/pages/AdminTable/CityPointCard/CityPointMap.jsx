@@ -8,7 +8,7 @@ import {
   SearchControl,
 } from 'react-yandex-maps';
 import { YMAPS_API } from '../../../config';
-export default class CityPointMap extends React.Component {
+ export default class CityPointMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +20,10 @@ export default class CityPointMap extends React.Component {
 
   onLoadMap(ymaps) {
     this.ymaps = ymaps;
+  }
+
+  goToErrorPage() {
+    this.props.history.push('/adminPanel/errorpage');
   }
 
   onClickHandler(event) {
@@ -55,6 +59,9 @@ export default class CityPointMap extends React.Component {
           instanceRef={(map) => (this.map = map)}
           width='100%'
           height='100%'
+          onError={(err) => {
+            this.goToErrorPage();
+}}
           onLoad={(ymaps) => {
             this.onLoadMap(ymaps);
           }}

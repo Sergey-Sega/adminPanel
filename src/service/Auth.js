@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 import axios from 'axios';
 import { APPLICATION_ID, BASE_URL, SECRET } from '../config';
 
@@ -21,3 +22,21 @@ const authLogin = () => {
 export const authConnect = {
     login: (body) => authLogin().post('/auth/login', body),
   };
+
+
+export const Logout = async (url) => {
+  const headers = {
+    'X-Api-Factory-Application-Id': APPLICATION_ID,
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+  };
+  try {
+    const response = await axiosInstance({
+      url,
+      headers,
+      method: 'POST',
+    });
+    return response.data;
+  } catch (error) {
+    console.log('error');
+  }
+};

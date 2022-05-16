@@ -103,6 +103,12 @@ $logo: url('../../assets/Logo.svg');
   line-height: 12px;
   color: $blue;
   text-decoration: none;
+  &.edit{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+  }
   &:hover {
     color: lighten($blue, 10);
   }

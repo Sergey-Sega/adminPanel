@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AdminList } from '../../../components/AdminList/AdminList';
 import { Loader } from '../../../components/Loader/Loader';
 import { fetchData } from '../../../service/getData';
@@ -8,16 +9,22 @@ import { CITIES } from '../../../service/urls';
 import './style.scss';
 
 export const PointsPage = () => {
+  const history = useHistory();
   const [pointsData, setPointsData] = useState('');
   const [cityList, setCityList] = useState('');
   const [city, setCity] = useState('');
   const [sort, setSort] = useState('name');
   const [trend, setTrend] = useState('1');
   const [isLoading, setIsLoading] = useState(false);
+  const [isDelete, setDelete] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
     setPointsData('');
+    getPointsTable();
+  }, [city, sort, trend]);
+
+  const getPointsTable = () => {
     fetchData(
       `db/point?${city && '&cityId=' + city}${
         sort && `&sort[${sort}]=${trend}`
@@ -37,10 +44,12 @@ export const PointsPage = () => {
         );
       })
       .then(() => fetchData(CITIES).then(({ data }) => setCityList(data)))
-      .catch((err) => console.error('ERROR', err)).finally(()=> {
+      .catch((err) => {
+history.push('/adminPanel/errorpage');
+}).finally(()=> {
 setIsLoading(false);
 });
-  }, [city, sort, trend]);
+};
 
   const columns = [
     { name: 'Город', dataName: 'city' },
@@ -71,10 +80,11 @@ setIsLoading(false);
           setTrend('1');
           break;
         default:
-          history.push('/admin/error-page/');
+          history.push('/adminPanel/errorpage/');
       }
     }
   }
+
   const shouldShowNoResult = !Object.values(pointsData ?? {}).length;
   return (
     <>
@@ -106,7 +116,7 @@ setIsLoading(false);
             <option value="addressDown">По адресу А-Я ↓</option>
           </select>
         </div>
-        {!isLoading && (!shouldShowNoResult ? <AdminList columns={columns} data={pointsData}/> : (<><h1 className='error_points'>Нет доступных точек выдачи</h1></>))}
+        {!isLoading && (!shouldShowNoResult ? <AdminList columns={columns} tableName='db/point/' data={pointsData} setDelete={setDelete} update={getPointsTable}/> : (<><h1 className='error_points'>Нет доступных точек выдачи</h1></>))}
         {isLoading && <Loader/>}
       </div>
     </>

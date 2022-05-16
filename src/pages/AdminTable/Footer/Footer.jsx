@@ -5,15 +5,15 @@ export const Footer = () => {
   return (
     <>
       <div className='admin-panel__container__bottombar__link-block'>
-        <Link className='admin__link' to='/adminPanel'>
+        <Link className='admin__link' to='/'>
           Главная страница
         </Link>
         <Link className='admin__link' to='/adminPanel/orders'>
-          Ссылка
+          Страница заказов
         </Link>
       </div>
       <p className='admin-panel__container__bottombar__copyright'>
-        Copyright © 2020 Simbirsoft
+        Copyright © 2020
       </p>
     </>
   );
