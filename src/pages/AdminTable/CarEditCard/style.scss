@@ -16,10 +16,10 @@
     box-sizing: border-box;
     width: 335px;
     margin-right: 28px;
-    
     @include adminBlock;
     &__img {
       padding: 22px;
+      max-width: -webkit-fill-available;
     }
     h2 {
       font-weight: normal;
@@ -100,11 +100,30 @@
         line-height: 21px;
       }
       &__group {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        &__price{
+          display: flex;
+          max-width: fit-content;
+        }
+        &__color{
+          padding-left: 10.25px;
+        }
         fieldset {
           padding-left: 0px;
+          span {
+            position: relative;
+            input.error {
+              border-color: $red;
+            }
+            p {
+              font-style: normal;
+              font-weight: normal;
+              font-size: 10px;
+              line-height: 11px;
+              color: $red;
+              position: absolute;
+              top: 25px;
+            }
+          }
         }
         &:last-child {
           flex-direction: column;
@@ -160,6 +179,10 @@
     }
   }
 }
+.checkbox__color{
+    display: flex;
+    margin: 15px;
+}
 @media (max-width: $desktopMini) {
   .car-edit__container__additional-block__form__group {
     flex-direction: column;
@@ -202,7 +225,7 @@
       .admin__input{
         min-width: 200px;
         width: 100%;
-      }
+}
     }
   }}
 }
@@ -216,5 +239,11 @@
 box-shadow: none;
     }
   }
-
 }
+@media (max-width: 1440px){
+  .car-edit__container{
+  &__additional-block__form__group__price{
+    display: flex;
+    flex-direction: column;
+  }
+  }}

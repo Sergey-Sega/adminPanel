@@ -8,24 +8,28 @@ import { Loader } from '../../../components/Loader/Loader';
 import { fetchData } from '../../../service/getData';
 import { CARS } from '../../../service/urls';
 import { SelectFilter } from '../../../components/SelectFilter/SelectFilter';
+import { useHistory } from 'react-router-dom';
 
-export default function CarListPage() {
+export const CarListPage = () => {
+  const history = useHistory();
   const [myCars, setMyCars] = useState('');
-  const [filterCar, setFilterCar] =useState({});
+  const [filterCar, setFilterCar] = useState({});
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const [filterList, setFilterList] = useState({
-  cars: [],
+    cars: [],
   });
   const [filter, setFilter] = useState({
     carId: '',
   });
   const [countPages, setCountPages] = useState();
 
-  useEffect(()=>{
+  useEffect(() => {
+    setIsLoading(true);
     getCarsTable();
   }, [page]);
 
-  useEffect(()=>{
+  useEffect(() => {
     createFilters();
   }, [page]);
 
@@ -33,21 +37,28 @@ export default function CarListPage() {
     const { carId } = filter;
     fetchData(
       `db/car?page=${page - 1}&limit=4&name[$gt]=${carId && '&carId=' + carId}`,
-    ).then((response)=> {
-      setMyCars(response.data);
-      setCountPages(Math.ceil(response.count / 4));
+    )
+      .then((response) => {
+        setMyCars(response.data);
+        setCountPages(Math.ceil(response.count / 4));
       })
-      .catch(() => history.push('/adminPanel/errorpage'));
+      .catch(() => {
+history.push('/adminPanel/errorpage');
+}).finally(()=>{
+        setIsLoading(false);
+      });
   };
+
+  const shouldShowNoResult = !Object.values(myCars ?? {}).length && !Object.values(filterCar).length;
 
   const fetchCar = () => {
     const { carId } = filter;
-    const res = fetchData(
-      `db/car/${carId}`,
-    ).then((res)=>{
-      setFilterCar(res.data);
-      setCountPages(1);
-    }).catch((error)=> console.error(error));
+    const res = fetchData(`db/car/${carId}`)
+      .then((res) => {
+        setFilterCar(res.data);
+        setCountPages(1);
+      })
+      .catch((error) => console.error(error));
   };
 
   function paginationHandler(event) {
@@ -66,21 +77,20 @@ export default function CarListPage() {
   }
   function filterHandler(event) {
     const { name, value } = event.target;
-     setFilter({ ...filter, [name]: value });
+    setFilter({ ...filter, [name]: value });
   }
-
 
   function createFilters() {
     let cars;
-        fetchData(CARS)
-          .then(({ data }) => {
-            cars = data;
-          })
-              .then(() =>
-                setFilterList({
-                  cars: cars,
-                }),
-              );
+    fetchData(CARS)
+      .then(({ data }) => {
+        cars = data;
+      })
+      .then(() =>
+        setFilterList({
+          cars: cars,
+        }),
+      );
   }
 
   const selectList = [
@@ -95,11 +105,12 @@ export default function CarListPage() {
     <>
       <h1 className="admin__heading">Список автомобилей</h1>
       <div className="car-list-page">
-      <div className="order-block__sort-container">
+        <div className="order-block__sort-container">
           <span onClick={createFilters} className="filter-icon"></span>
           <form className="order-block__sort-container__sort">
-             {selectList.map(({ name, options, defaultOption }) => (
+            {selectList.map(({ name, options, defaultOption }) => (
               <SelectFilter
+              disabled={filterList.cars.length ? false : true}
                 name={name}
                 options={options}
                 className="admin__select"
@@ -109,11 +120,14 @@ export default function CarListPage() {
               />
             ))}
             <button
-              onClick={()=> {
+              onClick={() => {
                 setPage(1);
                 getCarsTable();
                 fetchCar();
-}}
+                if (Object.values(filterCar).length) {
+                  setFilterCar({});
+                }
+              }}
               className="admin__button blue"
               type="button"
             >
@@ -122,17 +136,28 @@ export default function CarListPage() {
           </form>
         </div>
         <div className="car-list-page__container">
-          {myCars ? (myCars.map((el) => (
-            <React.Fragment key={el.id}>
-              <CarListCard el={el}/>
-            </React.Fragment>
-          ))) : <Loader/>}
-         {Object.values(filterCar).length ? (
-         <CarListCard el={filterCar} />
-           ) : null}
+        {isLoading && <Loader />}
+        {!isLoading &&
+          (!shouldShowNoResult ? (
+            myCars.map((el) => (
+              <React.Fragment key={el.id}>
+                <CarListCard el={el} />
+              </React.Fragment>
+            ))
+          ) : (<>
+          <h1 className="error_rates">Нет доступных машин</h1>
+        </>)
+          )}
+          {Object.values(filterCar).length ? (
+            <CarListCard el={filterCar} />
+          ) : null}
         </div>
-        <AdminPagination page={page} countPages={countPages} paginationHandler={paginationHandler}/>
+        {myCars ? (<AdminPagination
+          page={page}
+          countPages={countPages}
+          paginationHandler={paginationHandler}
+        />) : null}
       </div>
     </>
   );
-}
+};

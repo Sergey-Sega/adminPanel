@@ -1,11 +1,30 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { AdminAlert } from '../../../components/AdminAlert/AdminAlert';
 import AdminInput from '../../../components/AdminInput/AdmitInput';
+import { Warning } from '../../../components/Warning/Warning';
+import { createData, fetchData } from '../../../service/getData';
+import { RATE } from '../../../service/urls';
 import './style.scss';
 export const RateCreateCard = () => {
+  const history = useHistory();
+
   const [price, setPrice] = useState(1);
   const [name, setName] = useState('');
   const [unit, setUnit] = useState('');
+  const [rates, setRates] = useState([]);
+  const [alert, setAlert] = useState(false);
+  const [warning, setWarning] = useState(false);
+
+  useEffect(() => {
+    fetchData('db/rate')
+      .then(({ data }) => setRates(data))
+      .catch((err) => {
+        history.push('/adminPanel/errorpage');
+        console.error(err);
+      });
+  }, []);
 
   const inputs = [
     {
@@ -46,10 +65,56 @@ export const RateCreateCard = () => {
     }
   }
 
+  const createRate = () => {
+    const rateId = rates.find(
+      (el) => el.rateTypeId.unit === unit & el.rateTypeId.name === name,
+    )?.id;
+    if (rateId) {
+      setWarning(true);
+  } else {
+      createData(`db/rateType`, {
+        unit: unit,
+        name: name,
+      })
+        .then(({ data }) =>
+          createData(RATE, {
+            price: price,
+            rateTypeId: {
+              id: data.id,
+            },
+          }),
+        )
+        .catch((err) => {
+          history.push('/adminPanel/errorpage');
+        })
+        .finally(() => {
+          setPrice(1);
+          setUnit('');
+          setName('');
+          setAlert(true);
+          setTimeout(() => {
+            setAlert(false);
+          }, 2000);
+        });
+    }
+  };
+
   return (
     <>
-      <h1 className='admin__heading'>Создание тарифов</h1>
-      <div className='create-rate-block'>
+      {alert ? (
+        <AdminAlert
+          text="Успех, тариф сохранен!"
+          closeAction={() => setAlert(false)}
+        />
+      ) : null}
+      {warning ? (
+        <Warning
+        warningText='Такой тариф уже существует!'
+        closeAction={() => setWarning(false)}
+        />
+      ) : null}
+      <h1 className="admin__heading">Создание тарифов</h1>
+      <div className="create-rate-block">
         <div>
           {inputs.map((el) => (
             <AdminInput
@@ -63,14 +128,17 @@ export const RateCreateCard = () => {
             />
           ))}
         </div>
-        <div className='create-rate-block__btn-bar'>
+        <div className="create-rate-block__btn-bar">
           <button
             disabled={(!price || !unit || !name) && 'disabled'}
-            className='admin__button blue'
+            onClick={createRate}
+            className="admin__button blue"
           >
             Сохранить
           </button>
-          <button className='admin__button gray'>Отменить</button>
+          <button
+          onClick={()=> history.push('/rate-list')}
+           className="admin__button gray">Отменить</button>
         </div>
       </div>
     </>

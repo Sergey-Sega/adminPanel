@@ -51,7 +51,7 @@ $logo: url('../../assets/Logo.svg');
           background: $blue;
         }
         position: relative;
-        overflow: auto;
+        // overflow: auto;
         z-index: 1;
         grid-area: 2 / 2 / 3 / 3;
         background-color: $backgroundAdmin;
@@ -90,7 +90,7 @@ $logo: url('../../assets/Logo.svg');
         &.error{
           margin-top: 27.5px;
         }
-        &:hover {
+        &:hover:not(:disabled){
           background: darken($blue, 10);
           border: 0.5px solid darken($blue, 10);
         }
@@ -224,7 +224,22 @@ $logo: url('../../assets/Logo.svg');
       line-height: 13px;
       color: $mainBlack;
       padding-left: 11px;
-    }
+      &:active, &:focus{
+        border-color:$blue;
+        box-shadow: 0px 2.5px 5.5px rgba(24, 93, 196, 0.1);
+            }
+            &__error-text{
+              font-style: normal;
+                    font-weight: normal;
+                    font-size: 10px;
+                    line-height: 11px;
+                    color: $red!important;
+                    top: 50px;
+            }
+            &.error{
+              border-color: $red;
+            }
+          }
     &__textarea {
       font-weight: normal;
       font-size: 12.5px;
@@ -280,9 +295,9 @@ $logo: url('../../assets/Logo.svg');
       &__container {
         grid-template-columns: 57.5px 1fr;
         grid-template-rows: 68.5px 1fr 68.5px;
-        &__content {
-          padding: 14px;
-        }
+        // &__content {
+        //   padding: 14px;
+        // }
       }
     }
   }

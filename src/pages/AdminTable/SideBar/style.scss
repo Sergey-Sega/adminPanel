@@ -52,7 +52,7 @@ $logo: url("../../../assets/LogoIcon.svg");
     width: 100%;
     &:hover,
     &:active,
-    &:focus {
+    &:focus , &.active{
       box-shadow: inset 4px 0px $blue;
       color: $blue;
       span {
@@ -111,10 +111,5 @@ $logo: url("../../../assets/LogoIcon.svg");
     &__head .par {
       display: none;
     }
-  }
-}
-@media (max-width: $smart) {
-  .admin-panel__container__sidebar:hover {
-    width: 250px;
   }
 }
